@@ -45,6 +45,7 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
             .state('login',{
                 url:'/login',
                 templateUrl:'templates/login.html',
+                controller:'LoginCtrl'
             })
 
             //聊天模块
@@ -59,7 +60,7 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
             })
 
             //聊天-详情模块
-            .state('tab.main-detail',{
+            .state('tab.chatting-detail',{
                 url:'/chatting/:id',
                 views:{
                     'chatting-detail':{

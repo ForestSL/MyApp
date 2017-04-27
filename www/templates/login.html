@@ -10,17 +10,17 @@
         <div class="list list-inset">
           <label class="item item-input">
             <i class="icon ion-person placeholder-icon"></i>
-            <input type="text" placeholder="ID">
+            <input type="text" placeholder="输入手机号" name="phoneNumber" ng-minlength="11" ng-maxlength="11" ng-model="formUser.phoneNumber" required>
           </label>
           <label class="item item-input">
             <i class="icon ion-locked placeholder-icon"></i>
-            <input type="text" placeholder="Password">
+            <input type="text" placeholder="Password" name="password" ng-minlength="6" ng-maxlength="32" ng-model="formUser.password" required>
           </label>
         </div>
         <div class="padding">
           <div class="row row-center">  
           <div class="col text-center">
-            <button type = "submit" class="button button-block button-balanced" ui-sref="tab.chatting">
+            <button type = "submit" class="button button-block button-balanced" ng-click = "doLogin()">
               登录
             </button>
           </div> 
