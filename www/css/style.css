@@ -93,23 +93,16 @@ div .left:after {
  border-width: 8px 9px 8px 0;
  border-color: transparent #eae8e0;
 }
-.leftimg {
- float: left;
- margin-top: 10px;
-}
-.rightimg {
- float: right;
- margin-top: 10px;
-}
+
 .leftd {
  clear: both;
  float: left;
- margin-left: 10px;
+ margin-left: 0px;
 }
 .rightd {
  clear: both;
  float: right;
- margin-right: 10px;
+ margin-right: 0px;
 }
 
 .leftd_h{
@@ -121,11 +114,6 @@ div .left:after {
  overflow: hidden;
 }
 
-.leftd_h img{
- display: block;
- width: 100%;
- height: auto;
-}
 .rightd_h{
  width: 39px;
  height: 39px;
@@ -133,10 +121,4 @@ div .left:after {
  display: block;
  float: right;
  overflow: hidden;
-}
-
-.rightd_h img{
- display: block;
- width: 100%;
- height: auto;
 }

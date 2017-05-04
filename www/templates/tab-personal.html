@@ -3,19 +3,22 @@
     <ion-nav-buttons side="right">
         <button class="button button-icon icon ion-android-exit"  ng-click="showConfirm();"></button>
     </ion-nav-buttons>
-
-    <p></p>
-
-    <div class="content has-header">
-        <div class="item item-avatar button button-large button-full icon-right ion-chevron-right button-clear">
+    <!--<ion-content class="ionic-pseudo">-->
+    <ion-content>
+    <ion-list>
+        <ion-item class=" item-avatar item-icon-right">
                 <img src="/img/ionic.png">
-                <h2 style="left:">姓名</h2>
+                <h2 style="left:">
+                    姓名
+                    <i class="icon ion-ios-arrow-right"></i>
+                </h2>
                 <p>部门</p>
-        </div>
+        </ion-item>
         <p></p>
 
 
-    </div>
+    </ion-list>
+    </ion-content>
 
     
 </ion-view>

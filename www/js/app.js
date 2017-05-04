@@ -54,20 +54,16 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
                 views:{
                     'tab-chatting':{
                         templateUrl:'templates/tab-chatting.html',
+                        controller:'ChatCtrl'
                     }
                 }
 
             })
 
             //聊天-详情模块
-            .state('tab.chatting-detail',{
+            .state('chatting-detail',{
                 url:'/chatting/:id',
-                views:{
-                    'chatting-detail':{
-                        templateUrl:'templates/chatting-detail.html',
-                    }
-                }
-
+                templateUrl:'templates/chatting-detail.html'
             })
 
 
