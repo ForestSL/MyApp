@@ -122,3 +122,14 @@ div .left:after {
  float: right;
  overflow: hidden;
 }
+
+/*二级导航栏中的相关样式*/
+.blue{
+    color:#0c63ee;
+    border-bottom: 2px solid #0c63ee;
+}
+.two-level-nav{
+    cursor:pointer;
+    margin-bottom: -10px;
+
+}
