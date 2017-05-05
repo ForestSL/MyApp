@@ -1,20 +1,22 @@
 <ion-view view-title="企业内部交流APP">
     <ion-content>
-    <div class="row row-center">  
-        <div class="col text-center">
+        <div class="row row-center">  
+         <div class="col text-center">
           <div class="padding">
             <img src="\img\ionic.png">
           </div>
-        </div> 
+         </div> 
         </div>
+
+        
         <div class="list list-inset">
           <label class="item item-input">
             <i class="icon ion-person placeholder-icon"></i>
-            <input type="text" placeholder="输入手机号" name="phoneNumber" ng-minlength="11" ng-maxlength="11" ng-model="formUser.phoneNumber" required>
+            <input type="text" placeholder="输入手机号" name="phoneNumber" ng-minlength="11" ng-maxlength="11" ng-model="formUser.userPhone" required>
           </label>
           <label class="item item-input">
             <i class="icon ion-locked placeholder-icon"></i>
-            <input type="text" placeholder="Password" name="password" ng-minlength="6" ng-maxlength="32" ng-model="formUser.password" required>
+            <input type="text" placeholder="Password" name="password" ng-minlength="6" ng-maxlength="32" ng-model="formUser.userPwd" required>
           </label>
         </div>
         <div class="padding">

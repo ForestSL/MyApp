@@ -77,6 +77,7 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
                 views:{
                     'tab-list':{
                         templateUrl:'templates/tab-list.html',
+                        controller:'ListCtrl'
                     }
                 }
 
@@ -89,6 +90,7 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
                 views:{
                     'tab-task':{
                         templateUrl:'templates/tab-task.html',
+                        controller:'TaskCtrl'
                     }
                 }
 

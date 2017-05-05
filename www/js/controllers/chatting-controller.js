@@ -7,6 +7,10 @@ angular.module('chatting-controller',[])
         $scope.doChatting = function(){
             $state.go("chatting-detail",{"id":1});
         };
+
+        $scope.onSwipeLeft = function() {
+        	$state.go("tab.list");
+    };
     }])
     .controller('ChatDetailCtrl',['$scope','$state',function($scope, $state){
     	//返回

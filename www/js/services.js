@@ -1,6 +1,4 @@
-/**
- * Created by zhoupan on 2015/9/14.
- */
+
 angular.module('lqApp.services',[])
 
 //http://115.159.38.100:3000

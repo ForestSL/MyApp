@@ -21,5 +21,10 @@ angular.module('personal-controller',[])
                 });
         };
 
+        //滑动跳转
+        $scope.onSwipeRight = function() {
+            $state.go("tab.task");
+        };
+
 
     }]);

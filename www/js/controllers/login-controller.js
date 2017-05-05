@@ -6,17 +6,17 @@ angular.module('login-controller',[])
 
         //执行用户登录操作
         $scope.doLogin = function(){
- //           $state.go("tab.chatting");
- //            $data.login("user", this.formUser).success(function(data){
- //                if(data == null){
- //                    $scope.showErrorMesPopup("手机号或密码错误");
- //                }else{
-                     $scope.showSuccessMesPopup("正在登录请稍后");
- //                    console.log(data);
- //                    var user = JSON.stringify(data);
- //                    sessionStorage.setItem("user",user);
- //                }
- //         });
+            //$state.go("tab.chatting");
+            $data.login("user", this.formUser).success(function(data){
+                if(data == "fail"){
+                    $scope.showErrorMesPopup("手机号或密码错误");
+                }else{
+                   $scope.showSuccessMesPopup("正在登录请稍后");
+                    console.log(data);
+                   var user = JSON.stringify(data);
+                   sessionStorage.setItem("user",user);
+                }
+          });
         };
 
         $scope.showErrorMesPopup = function(title) {
@@ -38,4 +38,4 @@ angular.module('login-controller',[])
                 $state.go("tab.chatting");
             }, 2000);
         };
-    }]);
+   }]);
