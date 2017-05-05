@@ -1,7 +1,7 @@
 
 
 config = {
-    basePath:'http://192.168.1.180:8080/MyApp/',
+    basePath:'http://115.159.38.100:3000/',
    pagination:{
        pageSize:10,
        currentPage:1

@@ -7,4 +7,10 @@ angular.module('chatting-controller',[])
         $scope.doChatting = function(){
             $state.go("chatting-detail",{"id":1});
         };
+    }])
+    .controller('ChatDetailCtrl',['$scope','$state',function($scope, $state){
+    	//返回
+    	$scope.back2chat = function(){
+            $state.go("tab.chatting");
+        };
     }]);

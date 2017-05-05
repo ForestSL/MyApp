@@ -63,7 +63,8 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
             //聊天-详情模块
             .state('chatting-detail',{
                 url:'/chatting/:id',
-                templateUrl:'templates/chatting-detail.html'
+                templateUrl:'templates/chatting-detail.html',
+                controller:'ChatDetailCtrl'
             })
 
 
