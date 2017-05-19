@@ -2,7 +2,11 @@
 angular.module('personal-controller',[])
     .controller('PersonalCtrl',['$scope','$ionicPopup', '$state', function($scope, $ionicPopup, $state){
 
-    
+      
+        //获取当前session中的user(即当前登录的用户)
+        $scope.user = JSON.parse(sessionStorage.getItem("user"));
+
+
 
 
         // 确认弹出框
@@ -26,5 +30,37 @@ angular.module('personal-controller',[])
             $state.go("tab.task");
         };
 
+        //个人信息
+        $scope.show_personal_infor = function() {
+            $state.go("information");
+        };
+        $scope.modifyPassword = function(){
+          $state.go("modify");  
+        };
+    }])
 
+    .controller('PersonalInforCtrl',['$scope', '$state', function($scope, $state){
+
+        //获取当前session中的user(即当前登录的用户)
+        $scope.user = JSON.parse(sessionStorage.getItem("user"));
+
+//        $scope.on = function(){
+//            if(user.isLeader == user.userDepart)
+//                $scope.position="部长";
+//           else
+//                $scope.position="普通职员";
+//        }
+        
+
+
+        $scope.back2personal = function(){
+            $state.go("tab.personal");
+        };
+
+    }])
+
+    .controller('ModifyCtrl',['$scope', '$state', function($scope, $state){
+        $scope.back2personal = function(){
+            $state.go("tab.personal");
+        };
     }]);

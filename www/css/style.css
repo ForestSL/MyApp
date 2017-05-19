@@ -133,3 +133,14 @@ div .left:after {
     margin-bottom: -10px;
 
 }
+
+div .head_portrait{
+ width: 75px;
+ height: 75px;
+ border-radius: 100%;
+ display: block;
+ float: center;
+ overflow: hidden;
+ margin-top: -5px;
+ margin-bottom: 10px;
+}

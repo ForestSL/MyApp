@@ -1,0 +1,27 @@
+<ion-view view-title="个人信息">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon " ng-click="back2personal();">
+        <i class="icon ion-ios-arrow-back"></i>
+        返回
+        </button>
+  </ion-nav-buttons>
+
+    <ion-content on-swipe-left="onSwipeLeft()">
+    <ion-list>
+        <ion-item>
+            姓名：	{{user.userName}}
+        </ion-item>
+        <ion-item>
+            联系电话：	{{user.userPhone}}
+        </ion-item>
+        <ion-item>
+            部门：	{{user.userDepart}}
+        </ion-item>
+        <ion-item>
+            职位：	{{user.isLeader}}
+        </ion-item>
+        
+	</ion-list> 
+    </ion-content>
+    
+</ion-view>

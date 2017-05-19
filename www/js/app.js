@@ -25,7 +25,7 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
         $ionicConfigProvider.platform.android.tabs.position('standard');
 
         $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
-        $ionicConfigProvider.platform.android.navBar.alignTitle('left');
+        $ionicConfigProvider.platform.android.navBar.alignTitle('center');
 
         // 使用$stateProvider中的state()方法来进行路由的配置，这是ionic种的路由实现机制
         // 此处，没有使用AngularJS中的路由机制
@@ -107,5 +107,17 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
                     }
                 }
 
+            })
+
+            .state('information',{
+                url:'/information',
+                templateUrl:'templates/personal-infor.html',
+                controller:'PersonalInforCtrl'
+            })
+
+            .state('modify',{
+                url:'/modify',
+                templateUrl:'templates/modifyPassword.html',
+                controller:'ModifyCtrl'
             })
     });

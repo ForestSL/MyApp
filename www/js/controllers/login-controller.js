@@ -36,6 +36,6 @@ angular.module('login-controller',[])
             $timeout(function() {
                 myPopup.close(); // 2秒后关闭
                 $state.go("tab.chatting");
-            }, 2000);
+            }, 500);
         };
    }]);

@@ -5,18 +5,25 @@
     </ion-nav-buttons>
     <!--<ion-content class="ionic-pseudo">-->
     <ion-content on-swipe-right="onSwipeRight()">
+
+    <center>
+        <div class="item">
+          <img src="/img/ionic.png" class="head_portrait">  
+            <h2>{{user.userName}}</h2>
+            <p>{{user.userDepart}}</p>
+        </div>
+      </center>
+
     <ion-list>
-        <ion-item class=" item-avatar item-icon-right">
-                <img src="/img/ionic.png">
-                <h2 style="left:">
-                    姓名
-                    <i class="icon ion-ios-arrow-right"></i>
-                </h2>
-                <p>部门</p>
-        </ion-item>
-        <p></p>
-
-
+        <div class="item item-icon-right" ng-click="show_personal_infor()">
+            <h2>个人信息<i class="icon ion-ios-arrow-right"></i></h2>
+        </div>
+        <div class="item item-icon-right" ng-click="#">
+            <h2>公告查看<i class="icon ion-ios-arrow-right"></i></h2>
+        </div>
+        <div class="item item-icon-right" ng-click="modifyPassword()">
+            <h2>修改密码<i class="icon ion-ios-arrow-right"></i></h2>
+        </div>
     </ion-list>
     </ion-content>
 

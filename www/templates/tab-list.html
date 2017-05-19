@@ -1,7 +1,11 @@
 <ion-view view-title="通讯录">
     <!--本视图可见时，ion-nav-buttons将被导航框架载入导航栏-->
     <ion-content on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
-    暂未实现
+    	<ion-list>
+  			<ion-item ng-repeat="task in tasks" class="item item-icon-right" ng-click="#">
+    			{{task.title}}
+  			</ion-item>
+		</ion-list> 
     </ion-content>
     
 </ion-view>
