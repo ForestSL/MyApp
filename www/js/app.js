@@ -120,4 +120,10 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
                 templateUrl:'templates/modifyPassword.html',
                 controller:'ModifyCtrl'
             })
+
+            .state('announce',{
+                url:'/announce',
+                templateUrl:'templates/announce.html',
+                controller:'AnnounceCtrl'
+            })
     });

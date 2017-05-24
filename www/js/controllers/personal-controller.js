@@ -34,6 +34,9 @@ angular.module('personal-controller',[])
         $scope.show_personal_infor = function() {
             $state.go("information");
         };
+        $scope.show_announcement = function() {
+            $state.go("announce");
+        };
         $scope.modifyPassword = function(){
           $state.go("modify");  
         };
@@ -43,16 +46,7 @@ angular.module('personal-controller',[])
 
         //获取当前session中的user(即当前登录的用户)
         $scope.user = JSON.parse(sessionStorage.getItem("user"));
-
-//        $scope.on = function(){
-//            if(user.isLeader == user.userDepart)
-//                $scope.position="部长";
-//           else
-//                $scope.position="普通职员";
-//        }
         
-
-
         $scope.back2personal = function(){
             $state.go("tab.personal");
         };
@@ -60,6 +54,12 @@ angular.module('personal-controller',[])
     }])
 
     .controller('ModifyCtrl',['$scope', '$state', function($scope, $state){
+        $scope.back2personal = function(){
+            $state.go("tab.personal");
+        };
+    }])
+
+    .controller('AnnounceCtrl',['$scope', '$state', function($scope, $state){
         $scope.back2personal = function(){
             $state.go("tab.personal");
         };

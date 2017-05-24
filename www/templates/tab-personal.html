@@ -1,7 +1,7 @@
 <ion-view view-title="我">
     <!--本视图可见时，ion-nav-buttons将被导航框架载入导航栏-->
     <ion-nav-buttons side="right">
-        <button class="button button-icon icon ion-android-exit"  ng-click="showConfirm();"></button>
+        <button class="button button-icon icon ion-android-exit"  ng-click="showConfirm()"></button>
     </ion-nav-buttons>
     <!--<ion-content class="ionic-pseudo">-->
     <ion-content on-swipe-right="onSwipeRight()">
@@ -9,7 +9,7 @@
     <center>
         <div class="item">
           <img src="/img/ionic.png" class="head_portrait">  
-            <h2>{{user.userName}}</h2>
+            <h>{{user.userName}}</h>
             <p>{{user.userDepart}}</p>
         </div>
       </center>
@@ -18,7 +18,7 @@
         <div class="item item-icon-right" ng-click="show_personal_infor()">
             <h2>个人信息<i class="icon ion-ios-arrow-right"></i></h2>
         </div>
-        <div class="item item-icon-right" ng-click="#">
+        <div class="item item-icon-right" ng-click="show_announcement()">
             <h2>公告查看<i class="icon ion-ios-arrow-right"></i></h2>
         </div>
         <div class="item item-icon-right" ng-click="modifyPassword()">
