@@ -12,7 +12,6 @@ angular.module('login-controller',[])
                     $scope.showErrorMesPopup("手机号或密码错误");
                 }else{
                    $scope.showSuccessMesPopup("正在登录请稍后");
-                    console.log(data);
                    var user = JSON.stringify(data);
                    sessionStorage.setItem("user",user);
                 }

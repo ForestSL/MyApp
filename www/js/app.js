@@ -126,4 +126,10 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
                 templateUrl:'templates/announce.html',
                 controller:'AnnounceCtrl'
             })
+
+            .state('taskApl',{
+                url:'/taskApl',
+                templateUrl:'templates/taskApl.html',
+                controller:'TaskAplCtrl'
+            })
     });

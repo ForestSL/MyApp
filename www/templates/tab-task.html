@@ -1,5 +1,9 @@
 <ion-view view-title="任务">
     <!--本视图可见时，ion-nav-buttons将被导航框架载入导航栏-->
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-plus-round"  ng-click="task_apl()"></button>
+    </ion-nav-buttons>
+
     <div class="bar subheader-bar has-header">
         <div class="row text-center">
             <div class="col two-level-nav" ng-click="showTab('任务申请状态')" ng-class="{'blue':isOne}">
@@ -16,14 +20,18 @@
         <div ng-include="'待处理任务.html'" ng-if="tabIndex=='待处理任务'"></div>
 
         <script type="text/ng-template" id="任务申请状态.html">
-            <div class="list">
-                小兔子乖乖，把门开开，快点开开，我要进来~
-            </div>
+            <ion-list>
+                <ion-item  class="item-text-wrap" style="margin-top: 10px" ng-repeat="task_state in task_states">
+                    <h>{{task_state.title}}</h>
+                    <label style="float: right;"><p>{{task_state.tstate}}</p></label>
+                    <p>{{task_state.time}}<br/></p>           
+                </ion-item>
+            </ion-list>
         </script>
-
+    
         <script type="text/ng-template" id="待处理任务.html">
             <div class="list">
-                不开不开我不开，妈妈没回来，谁来也不开~
+                
             </div>
         </script>
 

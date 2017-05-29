@@ -2,7 +2,7 @@
     <!--本视图可见时，ion-nav-buttons将被导航框架载入导航栏-->
     <ion-content on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
     	<ion-list>
-  			<ion-item ng-repeat="task in tasks" class="item item-icon-right" ng-click="#">
+  			<ion-item ng-repeat="task in tasks" class="item item-icon-right">
     			{{task.title}}
   			</ion-item>
 		</ion-list> 

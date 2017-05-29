@@ -9,7 +9,12 @@ angular.module('lqApp.services',[])
                	 var url =config.basePath+tableName;
 
                   return $http.post(url+"/login", {userPhone: requestParams.userPhone,userPwd:requestParams.userPwd});
+            },
+             getAnnocement :function(tableName,requestParams){
+            	var url = config.basePath+tableName;
+            	return $http.post(url+"/search",requestParams);
             }
+
             
         }
 

@@ -1,13 +1,19 @@
-
 angular.module('personal-controller',[])
-    .controller('PersonalCtrl',['$scope','$ionicPopup', '$state', function($scope, $ionicPopup, $state){
+    .controller('PersonalCtrl',['$scope','$ionicPopup', '$state','$data', function($scope, $ionicPopup,$state,$data){
 
       
         //获取当前session中的user(即当前登录的用户)
         $scope.user = JSON.parse(sessionStorage.getItem("user"));
-
-
-
+        $data.getAnnocement("bulletin",  $scope.user).success(function(data){
+                if(data == "err in post /bulletin"){
+                    $scope.showErrorMesPopup("error in bulletin");
+                    console.log(2);
+                }else{
+                     var bulletins = JSON.stringify(data);
+                     console.log(bulletins);
+                     sessionStorage.setItem("bulletins",bulletins);
+                }
+          });
 
         // 确认弹出框
         $scope.showConfirm = function() {
@@ -35,6 +41,9 @@ angular.module('personal-controller',[])
             $state.go("information");
         };
         $scope.show_announcement = function() {
+
+        
+
             $state.go("announce");
         };
         $scope.modifyPassword = function(){
@@ -60,6 +69,16 @@ angular.module('personal-controller',[])
     }])
 
     .controller('AnnounceCtrl',['$scope', '$state', function($scope, $state){
+     
+        $scope.bulletins = JSON.parse(sessionStorage.getItem("bulletins"));
+//        $scope.bulletins = [
+//        {name:'argscheck',
+//        time:'123',
+//        content:'123123'},
+//       {name:'argscheck',
+//        time:'123',
+//        content:'123123'}
+//        ] 
         $scope.back2personal = function(){
             $state.go("tab.personal");
         };
