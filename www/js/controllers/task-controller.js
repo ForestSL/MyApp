@@ -2,7 +2,7 @@
 angular.module('task-controller',[])
 	.controller('TaskCtrl',['$scope', '$state', function($scope, $state) {
 
-        $scope.task_states=[
+        $scope.tasks_state=[
         {title:'任务1',
         tstate:'未处理',
         time:'1234-12-45'},
@@ -12,6 +12,18 @@ angular.module('task-controller',[])
         {title:'任务3',
         tstate:'未批准',
         time:'1234-12-45'}
+        ];
+
+        $scope.tasks2deal=[
+        {title:'任务1',
+        time:'1234-12-45',
+        aplyr:'a'},
+        {title:'任务2',
+        time:'1234-12-45',
+        aplyr:'b'},
+        {title:'任务3',
+        time:'1234-12-45',
+        aplyr:'c'},
         ];
 
 		$scope.onSwipeLeft = function() {
