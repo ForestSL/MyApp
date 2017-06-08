@@ -7,6 +7,8 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                 cordova.plugins.Keyboard.disableScroll(true);
+              
+              //初始化融云模块
 
             }
             if (window.StatusBar) {
