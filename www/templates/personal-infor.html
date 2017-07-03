@@ -1,31 +1,55 @@
 <ion-view view-title="个人信息">
     <ion-nav-buttons side="left">
-        <button class="button button-icon " ng-click="back2personal();">
+        <button class="button button-icon " ng-click="back2personal()">
         <i class="icon ion-ios-arrow-back"></i>
         返回
         </button>
-  </ion-nav-buttons>
+    </ion-nav-buttons>
 
     <ion-content on-swipe-left="onSwipeLeft()">
     <ion-list >
         <ion-item  style="margin-top: 20px">
-            <label style="float: right;"><img src="\img\ionic.png" class="head_portrait"></label>
+            <label style="float: right;">
+                <img src="https://raw.githubusercontent.com/resudualgave/asd/master/chunge.png" class="head_portrait">
+            </label>
             <br/>头像  
         </ion-item>
         <ion-item>
-            姓名 <label style="float: right;"><p>{{user.userName}}</p></label>
+            姓名
+                <label style="float: right;">
+                    <p>{{information.userName}}</p>
+                </label>
         </ion-item>
         <ion-item>
-            员工工号 <label style="float: right;"><p>{{user.userID}}</p></label>
+            员工工号
+                <label style="float: right;">
+                    <p>{{information.userID}}</p>
+                </label>
         </ion-item>
         <ion-item>
-            联系电话	<label style="float: right;"><p>{{user.userPhone}}</p></label>
+            联系电话
+                <label style="float: right;">
+                    <p>{{information.userPhone}}</p>
+                </label>
         </ion-item>
         <ion-item>
-            部门	<label style="float: right;"><p>{{user.DepartName}}</p></label>
+            部门
+                <label style="float: right;">
+                    <p>{{information.DepartName}}</p>
+                </label>
         </ion-item>
         <ion-item>
-            职位	<label style="float: right;"><p>{{user.isLeader}}</p></label>
+            职位
+                <label style="float: right;" ng-if="information.isLeader == '1'">
+                    <p>董事长</p>
+ <!--                   <p>{{IsLeader}}</p>-->
+                </label>
+                <label style="float: right;" ng-if="information.userDepart == information.isLeader && information.userDepart != '1'">
+                    <p>部长</p>
+                </label>
+                <label style="float: right;" ng-if="information.userDepart != information.isLeader">
+                    <p>部员</p>
+                </label>
         </ion-item>
         
 	</ion-list> 

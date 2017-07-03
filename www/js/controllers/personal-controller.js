@@ -1,17 +1,25 @@
 angular.module('personal-controller',[])
-    .controller('PersonalCtrl',['$scope','$ionicPopup', '$state','$data', function($scope, $ionicPopup,$state,$data){
-
-      
-        //获取当前session中的user(即当前登录的用户)
-        $scope.user = JSON.parse(sessionStorage.getItem("user"));
-        $data.getAnnocement("bulletin",  $scope.user).success(function(data){
+    .controller('AccountCtrl', function($scope,MyInfo,$ionicPopup,$state,$data,bulletinsService) {
+//        $scope.myInfo = MyInfo.all();
+		//获取当前session中的user(即当前登录的用户)
+       	var asd = {ss:"asdd"};
+        console.log(asd);
+ //       var myuser = JSON.parse(MyInfo.getLocalInfor());
+        $scope.user = JSON.parse(MyInfo.getLocalInfor());
+ //       console.log(myuser);
+        console.log($scope.user);
+        $data.getAnnocement("bulletin", MyInfo.getLocalInfor()).success(function(data){
                 if(data == "err in post /bulletin"){
                     $scope.showErrorMesPopup("error in bulletin");
+                    
                     console.log(2);
                 }else{
-                     var bulletins = JSON.stringify(data);
-                     console.log(bulletins);
-                     sessionStorage.setItem("bulletins",bulletins);
+
+                     var mybulletins = JSON.stringify(data);
+                     console.log(mybulletins);
+                     bulletinsService.initBulletins(mybulletins);
+                     console.log(bulletinsService.getBulletins());
+                     //sessionStorage.setItem("bulletins",bulletins);
                 }
           });
 
@@ -33,11 +41,15 @@ angular.module('personal-controller',[])
 
         //滑动跳转
         $scope.onSwipeRight = function() {
-            $state.go("tab.task");
+            $state.go("tab.groups");
         };
 
-        //个人信息
+		//个人信息
         $scope.show_personal_infor = function() {
+
+            console.log("输出个人资料");
+            $scope.user=MyInfo.getLocalInfor();
+            console.log($scope.user);
             $state.go("information");
         };
         $scope.show_announcement = function() {
@@ -49,28 +61,32 @@ angular.module('personal-controller',[])
         $scope.modifyPassword = function(){
           $state.go("modify");  
         };
-    }])
+    })
 
-    .controller('PersonalInforCtrl',['$scope', '$state', function($scope, $state){
+    .controller('PersonalInforCtrl', function($scope, $state,MyInfo){
 
         //获取当前session中的user(即当前登录的用户)
-        $scope.user = JSON.parse(sessionStorage.getItem("user"));
-        
-        $scope.back2personal = function(){
-            $state.go("tab.personal");
+        console.log(MyInfo.getLocalInfor());
+        $scope.information = JSON.parse(MyInfo.getLocalInfor());
+        console.log($scope.information);
+//        $scope.IsLeader = "傻逼";
+/*        if(information.isLeader == "1")
+            $scope.IsLeader = {"董事长"}；
+        else if(information.isLeader == information.userDepart)
+            $scope.IsLeader = {"部长"};
+        else
+            $scope.IsLeader = {"部员"};
+*/        $scope.back2personal = function(){
+ //       	console.log("absiudcheuairfhbiuaer");
+            $state.go("tab.account",{}, {reload: true});
         };
 
-    }])
+    })
 
-    .controller('ModifyCtrl',['$scope', '$state', function($scope, $state){
-        $scope.back2personal = function(){
-            $state.go("tab.personal");
-        };
-    }])
 
-    .controller('AnnounceCtrl',['$scope', '$state', function($scope, $state){
+    .controller('AnnounceCtrl',function($scope, $state,bulletinsService){
      
-        $scope.bulletins = JSON.parse(sessionStorage.getItem("bulletins"));
+        $scope.bulletins = JSON.parse(bulletinsService.getBulletins());
 //        $scope.bulletins = [
 //        {name:'argscheck',
 //        time:'123',
@@ -80,6 +96,6 @@ angular.module('personal-controller',[])
 //        content:'123123'}
 //        ] 
         $scope.back2personal = function(){
-            $state.go("tab.personal");
+            $state.go("tab.account");
         };
-    }]);
+    });

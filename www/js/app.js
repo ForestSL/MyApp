@@ -1,26 +1,38 @@
-angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.directives'])
+// Ionic Starter App
 
-    .run(function($ionicPlatform) {
-        $ionicPlatform.ready(function() {
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
-            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-                cordova.plugins.Keyboard.disableScroll(true);
-              
-              //初始化融云模块
+// angular.module is a global place for creating, registering and retrieving Angular modules
+// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+// the 2nd parameter is an array of 'requires'
+// 'starter.services' is found in services.js
+// 'starter.controllers' is found in controllers.js
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.disableScroll(true);
+    }
+    if (window.StatusBar) {
+      // org.apache.cordova.statusbar required
+      StatusBar.styleDefault();
+    }
+    //启动极光推送服务
+    //调试模式
+    window.plugins.jPushPlugin.init();
+    window.plugins.jPushPlugin.setDebugMode(true);
+    document.addEventListener('jmessage.onReceiveMessage', function(msg) {
+      //alert('新消息');
+      //appendReceMsg(msg.fromUser.nickname,msg.content.text);
+    }, false);
+  });
+})
+.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+   
 
-            }
-            if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                StatusBar.styleLightContent();
-            }
-        });
-    })
 
-    .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
-
-        //使用$ionicConfigProvider服务解决ionic项目生成的导航栏在手机顶部的问题
+  //使用$ionicConfigProvider服务解决ionic项目生成的导航栏在手机顶部的问题
         $ionicConfigProvider.platform.ios.tabs.style('standard');
         $ionicConfigProvider.platform.ios.tabs.position('bottom');
         $ionicConfigProvider.platform.android.tabs.style('standard');
@@ -29,109 +41,137 @@ angular.module('lqApp', ['ionic', 'lqApp.controllers', 'lqApp.services','lqApp.d
         $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
         $ionicConfigProvider.platform.android.navBar.alignTitle('center');
 
-        // 使用$stateProvider中的state()方法来进行路由的配置，这是ionic种的路由实现机制
-        // 此处，没有使用AngularJS中的路由机制
-
-        // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('login');
-
+/*
+     
+      $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
+      $ionicConfigProvider.platform.android.navBar.alignTitle('center');
+*/
+  // Ionic uses AngularUI Router which uses the concept of states
+  // Learn more here: https://github.com/angular-ui/ui-router
+  // Set up the various states which the app can be in.
+  // Each state's controller can be found in controllers.js
         $stateProvider
-            // setup an abstract state for the tabs directive
-            .state('tab', {
-                url: '/tab',
-                abstract:true,
-                templateUrl: 'templates/tabs.html'
-            })
+  // setup an abstract state for the tabs directive
+//登陆界面路由
+        .state('login', {
+          url: '/login',
+          templateUrl: 'templates/login.html',
+          controller: 'LoginCtrl'
+        })
+        //tab路由
+        .state('tab', {
+          url: '',
+          abstract: true,
+          templateUrl: 'templates/tabs.html'
+        })
+        //会话列表
+        .state('tab.chats', {
+          url: '/chats',
+          views: {
+              'tab-chats': {
+                templateUrl: 'templates/tab-chats.html',
+                controller: 'ChatsCtrl'
+              }
+          }
+        })
+        .state('tab.chats-add', {
+          url: '/chats-add',
+          views: {
+            'tab-chats': {
+              templateUrl: 'templates/chats-add.html',
+              controller: 'ChatsAddCtrl'
+            }
+        }
+        })
+        .state('tab.chat-detail', {
+          url: '/chat-detail',
+          params: {"chatId": null},
+          views: {
+            'tab-chats': {
+              templateUrl: 'templates/chat-detail.html',
+              controller: 'ChatDetailCtrl'
+            }
+          }
+        })
+  
+        //好友列表
+        .state('tab.friends', {
+          url: '/friends',
+          cache:'false',
+          views: {
+            'tab-friends': {
+              templateUrl: 'templates/tab-friends.html',
+              controller: 'FriendsCtrl'
+            }
+          }
+        })
 
-            //登录
-            .state('login',{
-                url:'/login',
-                templateUrl:'templates/login.html',
-                controller:'LoginCtrl'
-            })
+        .state('tab.friends-detail', {
+          url: '/friends-detail',
+          params: {"friendId": null},
+          views: {
+            'tab-friends': {
+              templateUrl: 'templates/friends-detail.html',
+              controller: 'FriendsDetailCtrl'
+            }
+          }
+        })
+        //群组列表
+        .state('tab.groups', {
+          url: '/groups',
+          views: {
+            'tab-groups': {
+              templateUrl: 'templates/tab-groups.html',
+              controller: 'GroupsCtrl'
+            }
+          }
+        })
+        .state('tab.group-detail', {
+          url: '/group-detail',
+          params: {"groupId": null},
+          views: {
+            'tab-groups': {
+              templateUrl: 'templates/group-detail.html',
+              controller: 'GroupDetailCtrl'
+            }
+          }
+        })
+        .state('tab.group-add', {
+          url: '/group-add',
+          views: {
+            'tab-groups': {
+              templateUrl: 'templates/group-add.html',
+              controller: 'GroupAddCtrl'
+            }
+          }
+        })
 
-            //聊天模块
-            .state('tab.chatting',{
-                url:'/chatting',
-                views:{
-                    'tab-chatting':{
-                        templateUrl:'templates/tab-chatting.html',
-                        controller:'ChatCtrl'
-                    }
-                }
+        //个人信息部分
+        .state('tab.account', {
+          url: '/account',
+          cache:'false', 
+          views: {
+            'tab-account': {
+              templateUrl: 'templates/tab-personal.html',
+              controller: 'AccountCtrl'
+            }
+          }
+        })
+        //个人详细信息
+        .state('information',{
+          url:'/information',
+          cache:'false', 
+          templateUrl:'templates/personal-infor.html',
+          controller:'PersonalInforCtrl'
+        })
+        //公告
+        .state('announce',{
+          url:'/announce',
+          templateUrl:'templates/announce.html',
+          controller:'AnnounceCtrl'
+        })
 
-            })
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/login');
 
-            //聊天-详情模块
-            .state('chatting-detail',{
-                url:'/chatting/:id',
-                templateUrl:'templates/chatting-detail.html',
-                controller:'ChatDetailCtrl'
-            })
-
-
-
-
-
-            //通讯录模块
-            .state('tab.list',{
-                url:'/list',
-                views:{
-                    'tab-list':{
-                        templateUrl:'templates/tab-list.html',
-                        controller:'ListCtrl'
-                    }
-                }
-
-            })
-
-
-            //任务模块
-            .state('tab.task',{
-                url:'/task',
-                views:{
-                    'tab-task':{
-                        templateUrl:'templates/tab-task.html',
-                        controller:'TaskCtrl'
-                    }
-                }
-
-            })
-
-
-            //我模块
-            .state('tab.personal',{
-                url:'/personal',
-                views:{
-                    'tab-personal':{
-                        templateUrl:'templates/tab-personal.html',
-                        controller: 'PersonalCtrl'
-                    }
-                }
-
-            })
-
-            .state('information',{
-                url:'/information',
-                templateUrl:'templates/personal-infor.html',
-                controller:'PersonalInforCtrl'
-            })
-
-            .state('modify',{
-                url:'/modify',
-                templateUrl:'templates/modifyPassword.html',
-                controller:'ModifyCtrl'
-            })
-
-            .state('announce',{
-                url:'/announce',
-                templateUrl:'templates/announce.html',
-                controller:'AnnounceCtrl'
-            })
-
-            .state('taskApl',{
-                url:'/taskApl',
-                templateUrl:'templates/taskApl.html',
-                controller:'TaskAplCtrl'
-            })
-    });
+});

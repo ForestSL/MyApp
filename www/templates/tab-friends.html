@@ -1,0 +1,65 @@
+<ion-view view-title="通讯录">
+
+    <ion-content>
+ <!--       <ion-list>
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="friend in friends track by friend.userID" type="item-text-wrap"  ui-sref="tab.friends-detail({friendId:friend.userID})">
+                <img ng-src="{{friend.face}}">
+                <h2>{{friend.nickname}}</h2>
+            </ion-item>
+        </ion-list>-->
+
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="Search">
+          </label>
+          <button class="button button-small">
+            搜索
+          </button>
+        </div>
+        <div>
+            <button class="button button-block icon-left ion-chatboxes" ng-if="information.userDepart == information.isLeader">部门聊天</button>  
+        </div>
+        
+        <br /> 
+
+        <ion-list>
+        <!--
+        <ion-item class="item-avatar" ng-repeat="d in data|orderBy:dd">
+            <td>{{d.age}}</td>
+            <td>{{d.name}}</td>
+        </ion-item>
+        <ion-item class="item-avatar" ng-repeat="d in data|orderBy:cc">
+            <td ng-bind="d.age">{{d.age}}</td>
+            <td ng-bind="d.name">{{d.name}}</td>
+        </ion-item>-->
+     
+     <!--   
+            <ion-item class="item-avatar" ng-repeat = "list in lists|orderBy:depart" href="#">
+                <img src="venkman.jpg">
+                <h2>{{list.userName}}</h2>
+            </ion-item>
+            -->
+
+<!--
+    <div data-ng-repeat="(letter, authors) in sorted_users">
+        <ion-item class="item item-divider" id="index_{{letter}}">
+            {{letter}}
+        </ion-item>
+        <ion-item ng-repeat="author in authors">
+            {{author.first_name}} {{author.last_name}}
+        </ion-item>
+    </div>
+-->
+
+    <div data-ng-repeat="(dpt, user_lists) in sorted_lists">
+        <ion-item class="item item-divider" class="list_head">
+            {{dpt}}
+        </ion-item>
+        <ion-item ng-repeat="user_list in user_lists">
+            {{user_list.userName}}
+        </ion-item>
+    </div>
+
+        </ion-list>
+    </ion-content>
+</ion-view>
