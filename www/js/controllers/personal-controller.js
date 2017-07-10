@@ -58,9 +58,7 @@ angular.module('personal-controller',[])
         };
         $scope.show_announcement = function() {
 
-        
-
-            $state.go("announce");
+            $state.go("bulletin");
         };
         $scope.modifyPassword = function(){
           $state.go("modify");  
@@ -88,7 +86,7 @@ angular.module('personal-controller',[])
     })
 
 
-    .controller('AnnounceCtrl',function($scope, $state,bulletinsService,MyInfo){
+    .controller('BulletinCtrl',function($scope, $state,bulletinsService,MyInfo){
      
         var user = JSON.parse(MyInfo.getLocalInfor());
         bulletinsService.getAnnocement("bulletin",user).success(function(data){
@@ -135,5 +133,14 @@ angular.module('personal-controller',[])
         };        
         $scope.back2personal = function(){
             $state.go("tab.account");
+        };
+    })
+
+    .controller('BulletinDetailCtrl',function($scope, $state, $stateParams){
+        $scope.bulletin = $stateParams.blt_detail;
+        console.log($scope.bulletin);
+
+        $scope.back2bulletin = function(){
+            $state.go("bulletin");
         };
     });

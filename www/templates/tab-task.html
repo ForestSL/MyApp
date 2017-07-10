@@ -15,15 +15,15 @@
         </div>
     </div>
     <ion-content class="has-subheader" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
-        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+
         <div ng-include="'任务申请状态.html'" ng-if="tabIndex=='任务申请状态'"></div>
         <div ng-include="'待处理任务.html'" ng-if="tabIndex=='待处理任务'"></div>
 
         <script type="text/ng-template" id="任务申请状态.html">
             <ion-list>
             <div>
-                <ion-item  class="item-text-wrap" ng-repeat="task_state in tasks_state" ui-sref="task-detail({dtltask:task_state})">
-                    <h>ID：{{task_state.processID}}</h>
+                <ion-item  class="item-text-wrap" ng-repeat="task_state in tasks_state | orderBy:task_state.processID:true" ui-sref="task-detail({dtltask:task_state})">
+                    <h>任务ID：{{task_state.processID}}</h>
                     <label style="float: right;"><p>{{task_state.result}}</p></label>
                     <!--<p>申请时间：{{task_state.time}}<br/></p>-->           
                 </ion-item>
@@ -33,10 +33,10 @@
     
         <script type="text/ng-template" id="待处理任务.html">
             <div class="list">
-                <ion-item  class="item-text-wrap" style="margin-top: 10px" ng-repeat="task2deal in tasks2deal" ui-sref="task2deal-detail({dtltask2deal:task2deal})">
-                    <h>请假申请</h>                  
-                    <p>申请人：{{task2deal.aplyr}}<br/></p>
-                    <p>申请时间：{{task2deal.createTime}}</p>           
+                <ion-item  class="item-text-wrap" style="margin-top: 10px" ng-repeat="task2deal in tasks2deal | orderBy:task_state.processID:true" ui-sref="task2deal-detail({dtltask2deal:task2deal})">
+                    <h ng-if="task2deal.name == 'Handle vacation request'">请假申请</h>
+                    <h ng-if="task2deal.name == 'Adjust vacation request'">请假调整</h>
+                    <p>申请时间：{{task2deal.createTime | date:"yyyy-MM-dd HH:mm:ss"}}</p>           
                 </ion-item>
             </div>
         </script>

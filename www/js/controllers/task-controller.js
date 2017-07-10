@@ -1,6 +1,6 @@
 
 angular.module('task-controller',[])
-	.controller('TaskCtrl',['$scope', '$ionicPopup','$state','Task', 'MyInfo', function($scope, $ionicPopup, $state, Task, MyInfo) {
+	.controller('TaskCtrl',function($scope, $ionicPopup, $state, Task, MyInfo) {
         //获取数据库数据
         $scope.abc=[
         {title:'任务1',
@@ -170,8 +170,8 @@ angular.module('task-controller',[])
             })
         };
 */
-		}])
-    .controller('TaskAplCtrl',['$scope', '$state', 'Task', '$ionicPopup', '$timeout', 'MyInfo',function($scope, $state, Task, $ionicPopup, $timeout, MyInfo) {
+		})
+    .controller('TaskAplCtrl',function($scope, $state, Task, $ionicPopup, $timeout, MyInfo) {
         $scope.task = {userID:"",
                         userName:"",
                         numOfDays: "",
@@ -244,9 +244,9 @@ angular.module('task-controller',[])
             $state.go("tab.task");
         };
 
-        }])
+        })
 
-    .controller('TaskDetailCtrl',['$scope', '$state', '$stateParams', 'Task', function($scope, $state, $stateParams, Task) {
+    .controller('TaskDetailCtrl', function($scope, $state, $stateParams, Task) {
 
         $scope.dtltask = $stateParams.dtltask;
         console.log($stateParams.dtltask);
@@ -287,10 +287,10 @@ angular.module('task-controller',[])
         $scope.back2task = function(){
             $state.go("tab.task");
         };
-        }])
+        })
 
 
-    .controller('Task2DealDetailCtrl',['$scope', '$state', '$stateParams', 'Task', function($scope, $state, $stateParams, Task) {
+    .controller('Task2DealDetailCtrl', function($scope, $state, $stateParams, Task) {
 
         $scope.dtltask2deal = $stateParams.dtltask2deal;
         console.log($stateParams.dtltask2deal);
@@ -321,7 +321,7 @@ angular.module('task-controller',[])
 
         };
 
-        }]);
+        });
 /*
     $data.getAnnocement("bulletin",  $scope.user).success(function(data){
                 if(data == "err in post /bulletin"){

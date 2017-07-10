@@ -7,24 +7,24 @@
     </ion-nav-buttons>
 
     <ion-content>
-    	<ion-list>
-    	<ion-item class="item-text-wrap" style="margin-top: 10px">
-    		<h>
+        <ion-list>
+        <ion-item class="item-text-wrap" style="margin-top: 10px">
+            <h>
                 申请时间
             </h>
             <p style="float: right;">
-                {{task_detail.createTime}}
+                {{task_detail.createTime | date:"yyyy-MM-dd HH:mm:ss"}}
             </p>
-    	</ion-item>
-    	
-    	<ion-item>
-    		<h>
-    			申请状态
-    		</h>
-    		<p style="float: right;">
-    			{{dtltask.result}}
-    		</p>
-    	</ion-item>
+        </ion-item>
+        
+        <ion-item>
+            <h>
+                申请状态
+            </h>
+            <p style="float: right;">
+                {{dtltask.result}}
+            </p>
+        </ion-item>
 
         <ion-item class="item-text-wrap">
             <h>
@@ -34,7 +34,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;{{task_detail.description}}
             </p>
         </ion-item>
-    	</ion-list>
+        </ion-list>
     </ion-content>
 
 </ion-view>

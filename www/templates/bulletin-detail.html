@@ -1,0 +1,23 @@
+<ion-view view-title="公告">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon " ng-click="back2bulletin()">
+        <i class="icon ion-ios-arrow-back"></i>
+        返回
+        </button>
+  </ion-nav-buttons>
+        <ion-content>
+            <ion-item  class="item-text-wrap" style="margin-top: 20px">
+                <h>
+                    {{bulletin.name}}
+                </h>
+                <label style="float: right;">
+                    <p>
+                        {{bulletin.time}}
+                    </p>
+                </label>
+                <p>
+                    {{bulletin.content}}
+                </p>          
+            </ion-item>
+        </ion-content>
+</ion-view>

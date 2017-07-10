@@ -142,12 +142,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
           controller:'PersonalInforCtrl'
         })
         //公告
-        .state('announce',{
-          url:'/announce',
+        .state('bulletin',{
+          url:'/bulletin',
           cache:false,
-          templateUrl:'templates/announce.html',
-          controller:'AnnounceCtrl'
+          templateUrl:'templates/bulletin.html',
+          controller:'BulletinCtrl'
         })
+
+        .state('bulletin-detail',{
+          cache:false,
+          params:{"blt_detail":null},
+          templateUrl:'templates/bulletin-detail.html',
+          controller:'BulletinDetailCtrl'
+        })
+
         .state('taskApl',{
           url:'/taskApl',
           templateUrl:'templates/taskApl.html',

@@ -7,23 +7,23 @@
     </ion-nav-buttons>
 
     <ion-content>
-    	
-    	<ion-item class="item-text-wrap" style="margin-top: 10px">
-    		<h>
+        
+        <ion-item class="item-text-wrap" style="margin-top: 10px">
+            <h>
                 申请时间：
             </h>
             <p style="padding-left: 20px">
-                {{task2deal_detail.createTime}}
+                {{task2deal_detail.createTime | date:"yyyy-MM-dd HH:mm:ss"}}
             </p>
-    	</ion-item>
-    	<ion-item class="item-text-wrap">
-    	    <h>
+        </ion-item>
+        <ion-item class="item-text-wrap">
+            <h>
                 申请内容：
             </h>
             <p style="padding-left: 20px">
                 {{task2deal_detail.description}}
             </p>
-    	</ion-item>
+        </ion-item>
 
         <ion-item>
             <button class="button button-small" style="padding-right: 60px;padding-left: 50px;float: left;" ng-click="refuse()">
@@ -33,7 +33,7 @@
                 同意
             </button>
         </ion-item>
-    	
+        
     </ion-content>
 
 </ion-view>

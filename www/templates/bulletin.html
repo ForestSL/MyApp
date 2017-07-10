@@ -1,0 +1,25 @@
+<ion-view view-title="公告">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon " ng-click="back2personal()">
+        <i class="icon ion-ios-arrow-back"></i>
+        返回
+        </button>
+  </ion-nav-buttons>
+    <ion-pane>
+        <ion-content on-swipe-left="onSwipeLeft()">
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+            <ion-list>
+                <ion-item  class="item-text-wrap" style="margin-top: 20px" ng-repeat = "bulletin in bulletins | orderBy:bulletin.time.processID:true" ui-sref="bulletin-detail({blt_detail:bulletin})">
+                    <h>
+                        {{bulletin.name}}
+                    </h>
+                    <label style="float: right;">
+                        <p>
+                            {{bulletin.time}}
+                        </p>
+                    </label>          
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-pane>
+</ion-view>
