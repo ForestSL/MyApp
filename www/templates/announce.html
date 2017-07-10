@@ -5,26 +5,19 @@
         返回
         </button>
   </ion-nav-buttons>
-    <ion-pane>
-        <ion-content on-swipe-left="onSwipeLeft()">
-        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
-            <ion-list>
-                <ion-item  class="item-text-wrap" style="margin-top: 20px" ng-repeat = "bulletin in bulletins">
-                    <h>
-                        {{bulletin.name}}
-                    </h>
-                    <label style="float: right;">
-                        <p>
-                            {{bulletin.time}}
-                        </p>
-                    </label>          
-                    <p>
-                        <br>
-                        {{bulletin.content}}
-                        <br>
-                    </p> 
-                </ion-item>
-            </ion-list>
-        </ion-content>
-    </ion-pane>
+
+    <ion-content>
+    <ion-list>
+ 
+
+    <ion-item  class="item-text-wrap" style="margin-top: 20px" ng-repeat = "bulletin in bulletins">
+            <h>{{bulletin.name}}</h>
+            <label style="float: right;"><p>{{bulletin.time}}</p></label>          
+            <p><br/>{{bulletin.content}}<br/></p> 
+    </ion-item>
+
+
+    </ion-list>
+    </ion-content>
+    
 </ion-view>

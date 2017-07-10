@@ -1,3 +1,4 @@
+
 angular.module('chatting-controller',[])
 .controller('ChatsCtrl', function($scope, Chats) 
    {
@@ -65,7 +66,7 @@ angular.module('chatting-controller',[])
             window.JMessage.enterSingleConversation($scope.toUser, null,
                 function(response) 
                 {
-                    //加载历史信息
+                	//加载历史信息
                     Messages.getAll('single',$scope.toUser,0,10).then(function(data) 
                     {
                         $scope.messages= data;

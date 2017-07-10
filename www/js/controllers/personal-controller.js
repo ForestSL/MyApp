@@ -100,10 +100,6 @@ angular.module('personal-controller',[])
 //        time:'123',
 //        content:'123123'}
 //        ] 
-        $scope.doRefresh = function() {
-            $scope.bulletins = JSON.parse(bulletinsService.getBulletins());
-            $scope.$broadcast('scroll.refreshComplete');
-        };        
         $scope.back2personal = function(){
             $state.go("tab.account");
         };
