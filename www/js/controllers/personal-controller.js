@@ -8,20 +8,19 @@ angular.module('personal-controller',[])
         $scope.user = JSON.parse(MyInfo.getLocalInfor());
  //       console.log(myuser);
         console.log($scope.user);
-        $data.getAnnocement("bulletin", MyInfo.getLocalInfor()).success(function(data){
-                if(data == "err in post /bulletin"){
-                    $scope.showErrorMesPopup("error in bulletin");
-                    
-                    console.log(2);
-                }else{
 
-                     var mybulletins = JSON.stringify(data);
-                     console.log(mybulletins);
-                     bulletinsService.initBulletins(mybulletins);
-                     console.log(bulletinsService.getBulletins());
-                     //sessionStorage.setItem("bulletins",bulletins);
-                }
-          });
+        // $data.getAnnocement("bulletin", MyInfo.getLocalInfor()).success(function(data){
+        //         if(data == "err in post /bulletin"){
+        //             $scope.showErrorMesPopup("error in bulletin");
+        //         }else{
+
+        //              var mybulletins = JSON.stringify(data);
+        //              console.log(mybulletins);
+        //              bulletinsService.initBulletins(mybulletins);
+        //              console.log(bulletinsService.getBulletins());
+        //              //sessionStorage.setItem("bulletins",bulletins);
+        //         }
+        //   });
 
         // 确认弹出框
         $scope.showConfirm = function() {
@@ -89,9 +88,21 @@ angular.module('personal-controller',[])
     })
 
 
-    .controller('AnnounceCtrl',function($scope, $state,bulletinsService){
+    .controller('AnnounceCtrl',function($scope, $state,bulletinsService,MyInfo){
      
-        $scope.bulletins = JSON.parse(bulletinsService.getBulletins());
+        var user = JSON.parse(MyInfo.getLocalInfor());
+        bulletinsService.getAnnocement("bulletin",user).success(function(data){
+            if(data == "err in post /bulletin"){
+                console.log(250);
+            //        $scope.showErrorMesPopup("error in bulletin");
+            }
+            else{
+                var temp = JSON.stringify(data);
+                $scope.bulletins = JSON.parse(temp);
+                console.log($scope.bulletins);
+                     //sessionStorage.setItem("bulletins",bulletins);
+            }
+        });
 //        $scope.bulletins = [
 //        {name:'argscheck',
 //        time:'123',
@@ -101,7 +112,25 @@ angular.module('personal-controller',[])
 //        content:'123123'}
 //        ] 
         $scope.doRefresh = function() {
-            $scope.bulletins = JSON.parse(bulletinsService.getBulletins());
+
+            bulletinsService.getAnnocement("bulletin",user).success(function(data){
+            if(data == "err in post /bulletin"){
+                console.log(250);
+            //        $scope.showErrorMesPopup("error in bulletin");
+            }
+            else{
+                var temp = JSON.stringify(data);
+                $scope.bulletins = JSON.parse(temp);
+                console.log($scope.bulletins);
+                     //sessionStorage.setItem("bulletins",bulletins);
+            }
+        });
+            // $scope.bulletins = {};
+            // $scope.$apply(function (){
+            //     $scope.bulletins = JSON.parse(bulletinsService.getAnnocement());
+            //     console.log($scope.bulletins);
+            // });
+            // console.log($scope.bulletins);
             $scope.$broadcast('scroll.refreshComplete');
         };        
         $scope.back2personal = function(){

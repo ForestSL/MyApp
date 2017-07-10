@@ -12,6 +12,18 @@ angular.module('chatting-controller',[])
 
             });
         });
+
+        $scope.doRefresh = function() {
+            Chats.getAll().then(function(data) 
+            {
+                $scope.chats = data;
+                console.log("Output chat list nest step");
+                console.log($scope.chats);
+
+            });
+            $scope.$broadcast('scroll.refreshComplete');
+        }; 
+
         document.addEventListener('jmessage.onReceiveMessage', function(msg) 
         {
              console.log(msg);

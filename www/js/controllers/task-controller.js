@@ -62,6 +62,36 @@ angular.module('task-controller',[])
             }
         });
 
+        $scope.doRefresh = function() {
+            $scope.$apply(function (){
+                Task.getTaskList("task",user).success(function(data){//获取任务状态列表
+                if(data == "err in get /task"){
+                    $scope.showErrorMesPopup("error in vacation");
+                    console.log("ahsud");
+                }
+                else{
+                    var temp = JSON.stringify(data);
+                    $scope.tasks_state = JSON.parse(temp);
+                    console.log(temp);
+                    console.log($scope.tasks_state);
+                }
+                });
+                Task.getTask2Deal("task",user).success(function(data){//获取待处理任务列表
+                    if(data == "fail"){
+                        $scope.showErrorMesPopup("error in vacation");
+                        console.log("ahsud");
+                    }   
+                    else{
+                        var temp = JSON.stringify(data);
+                        $scope.tasks2deal = JSON.parse(temp);
+                        console.log(temp);
+                        console.log($scope.tasks2deal);
+                    }
+                });
+            });
+            $scope.$broadcast('scroll.refreshComplete');
+        }; 
+
 
 		$scope.onSwipeLeft = function() {
         	$state.go("tab.personal");

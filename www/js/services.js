@@ -219,25 +219,18 @@ angular.module('starter.services', [])
                  var url =config.basePath+tableName;
 
                   return $http.post(url+"/login", {userPhone: requestParams.userPhone,userPwd:requestParams.userPwd});
-            },
-             getAnnocement :function(tableName,requestParams){
-              var url = config.basePath+tableName;
-              return $http.post(url+"/search",requestParams);
-            }
+            }            
         }
 
     })
-    .factory('bulletinsService',function(){
-      var bulletins;
+
+    .factory('bulletinsService',function($http){
+      
       return{
-        getBulletins:function()
-        {
-          return bulletins;
-        },
-        initBulletins:function(data)
-        {
-          bulletins=data;
-        }
+        getAnnocement :function(tableName,requestParams){
+              var url = config.basePath+tableName;
+              return $http.post(url+"/search",requestParams);
+            }
       }
     })
 

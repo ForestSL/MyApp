@@ -144,6 +144,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
         //公告
         .state('announce',{
           url:'/announce',
+          cache:false,
           templateUrl:'templates/announce.html',
           controller:'AnnounceCtrl'
         })
