@@ -1,5 +1,5 @@
 angular.module('list-controller',[])
-    .controller('FriendsCtrl', function($scope, Friends, Colleagues, $ionicScrollDelegate, MyInfo) {
+    .controller('FriendsCtrl', function($scope, Friends, Colleagues, $ionicScrollDelegate, MyInfo, $state) {
 /*        $scope.$on('$ionicView.enter', function(e) {
             //获取当前用户所有会话框列表
             Friends.getAll(
@@ -178,6 +178,11 @@ angular.module('list-controller',[])
         }
         $scope.sorted_lists = tmplist;
 
+        $scope.go2gpchat = function(){
+            console.log("nimab");
+            $state.go("group-chatting");
+            console.log("跳转成功");
+        };
 
 
     })
@@ -195,6 +200,7 @@ angular.module('list-controller',[])
                 });
         };
     })
+    /*
     .controller('FriendsDetailCtrl', function($scope, $stateParams, Friends) {
         alert($stateParams.friendId);
 
@@ -218,4 +224,4 @@ angular.module('list-controller',[])
                     });
             }
         };
-    });
+    });*/

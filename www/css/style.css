@@ -74,7 +74,6 @@ img.profile-pic.right {
 }
 
 .chat-bubble:before {
-    content: "\00a0";
     display: block;
     height: 16px;
     width: 9px;
@@ -198,4 +197,19 @@ div .head_portrait{
 
 div .list_head{
     color: #49afcd;
+}
+
+
+
+
+
+/*二级导航栏中的相关样式*/
+.blue{
+    color:#0c63ee;
+    border-bottom: 2px solid #0c63ee;
+}
+.two-level-nav{
+    cursor:pointer;
+    margin-bottom: -10px;
+
 }

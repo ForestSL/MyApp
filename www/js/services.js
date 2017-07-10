@@ -1,16 +1,19 @@
 angular.module('starter.services', [])
-    .factory('Chats', ['$q',function($q) {
-    var chats = [{
-      id: 0,
-      targetId: 'nocoolyoyo2',
-      lastText: '最近怎样',
-      type: "single",
-      unReadMsgCnt: 0,
-      lastMsgDate: 1468983461848,
-      face: 'img/ben.png'
-    }];
 
+    .factory('Chats', ['$q',function($q) {
+ /*   var chats = {[{
+          id: 0,
+          targetId: 'nocoolyoyo2',
+          lastText: '最近怎样',
+          type: "single",
+          unReadMsgCnt: 0,
+          lastMsgDate: 1468983461848,
+          face: 'img/ben.png'
+        }]};
+*/
+    var chats = {};
     return {
+      //获取历史对话框
       getAll: function() {
         var deferred = $q.defer();
         window.JMessage.getConversationList(
@@ -40,8 +43,9 @@ angular.module('starter.services', [])
       }
     };
   }])
+
     .factory('Messages', ['$q',function($q) {
-        var messages = [{
+/*        var messages = [{
             id: 0,
             targetId: 'nocoolyoyo2',
             lastText: '最近怎样',
@@ -50,7 +54,9 @@ angular.module('starter.services', [])
             lastMsgDate: 1468983461848,
             face: 'img/ben.png'
         }];
-        return {
+  */
+      var messages={};
+       return {
             getAll: function(conversationType, value, from, limit) {
                 var deferred = $q.defer();
                 window.JMessage.getHistoryMessages(conversationType, value, '',from, limit,
@@ -61,6 +67,7 @@ angular.module('starter.services', [])
                     }, function(errorMsg) {
                         console.log(errorMsg);  // 输出错误信息。
                     });
+                console.log(deferred.promise);
                 return deferred.promise;
             },
             getLocalMessage: function(){
@@ -79,6 +86,7 @@ angular.module('starter.services', [])
             },
         };
     }])
+
     .factory('MyInfo', function() {
       var myInfo = {
         address: "",
@@ -128,6 +136,7 @@ angular.module('starter.services', [])
         }
       };
     })
+
     .factory('Friends', ['$q',function($q) {
           var friends = [];
 
@@ -153,6 +162,7 @@ angular.module('starter.services', [])
             }
           };
         }])
+
     .factory('Colleagues',function($http)
     {
       var colleagues=[];
@@ -163,10 +173,10 @@ angular.module('starter.services', [])
             $http.get(url).success(function(data){
               colleagues=data;
               
-              console.log(data);
-              console.log(colleagues);
-              console.log(colleagues[1]);
-              console.log(colleagues[2]["userName"]);
+              //console.log(data);
+             // console.log(colleagues);
+              //console.log(colleagues[1]);
+              //console.log(colleagues[2]["userName"]);
 
             });
         },
@@ -229,4 +239,45 @@ angular.module('starter.services', [])
           bulletins=data;
         }
       }
-    });
+    })
+
+    .factory('Task',function($http){
+        return{
+          //获取任务列表
+          getTaskList:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/vacation/list",requestParams);
+          },
+          //请假申请
+          LeaveApl:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/vacation/request",requestParams); 
+          },
+          //查看任务详情
+          getTaskDetail:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/vacation/list/detail",requestParams); 
+          },
+          //获取待处理任务列表
+          getTask2Deal:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/vacation/handle/list",requestParams); 
+          },
+          //获取待处理任务详情
+          getTask2DeaDetail:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/vacation/handle/detail",requestParams); 
+          },
+
+          handleRequest:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/vacation/handlerequest",requestParams); 
+          }
+        }
+      });

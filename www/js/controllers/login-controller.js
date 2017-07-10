@@ -21,6 +21,10 @@ angular.module('login-controller',[])
                 if(data == "fail"){
                     $scope.showErrorMesPopup("手机号或密码错误");
                 }
+                else if(data == "forbidden")
+                {
+                  alert("该用户被管理员禁用");
+                }
                 else
                 {
                    $scope.showSuccessMesPopup("正在登录请稍后");

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -67,6 +67,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         //会话列表
         .state('tab.chats', {
           url: '/chats',
+          cache:'false',
           views: {
               'tab-chats': {
                 templateUrl: 'templates/tab-chats.html',
@@ -83,15 +84,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             }
         }
         })
-        .state('tab.chat-detail', {
-          url: '/chat-detail',
+        .state('chat-detail', {
           params: {"chatId": null},
-          views: {
-            'tab-chats': {
               templateUrl: 'templates/chat-detail.html',
               controller: 'ChatDetailCtrl'
-            }
-          }
+        })
+
+        .state('group-chatting',{
+          params: {"Depart_list": null},
+              templateUrl: 'templates/group-chatting.html',
+              controller: 'GroupChatingCtrl'
         })
   
         //好友列表
@@ -106,45 +108,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           }
         })
 
-        .state('tab.friends-detail', {
-          url: '/friends-detail',
-          params: {"friendId": null},
-          views: {
-            'tab-friends': {
-              templateUrl: 'templates/friends-detail.html',
-              controller: 'FriendsDetailCtrl'
-            }
-          }
-        })
+
         //群组列表
-        .state('tab.groups', {
-          url: '/groups',
+        .state('tab.task', {
+          url: '/task',
+          cache:false,
           views: {
-            'tab-groups': {
-              templateUrl: 'templates/tab-groups.html',
-              controller: 'GroupsCtrl'
+            'tab-task': {
+              templateUrl: 'templates/tab-task.html',
+              controller: 'TaskCtrl'
             }
           }
         })
-        .state('tab.group-detail', {
-          url: '/group-detail',
-          params: {"groupId": null},
-          views: {
-            'tab-groups': {
-              templateUrl: 'templates/group-detail.html',
-              controller: 'GroupDetailCtrl'
-            }
-          }
-        })
-        .state('tab.group-add', {
-          url: '/group-add',
-          views: {
-            'tab-groups': {
-              templateUrl: 'templates/group-add.html',
-              controller: 'GroupAddCtrl'
-            }
-          }
-        })
+        
+
 
         //个人信息部分
         .state('tab.account', {
@@ -169,6 +146,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           url:'/announce',
           templateUrl:'templates/announce.html',
           controller:'AnnounceCtrl'
+        })
+        .state('taskApl',{
+          url:'/taskApl',
+          templateUrl:'templates/taskApl.html',
+          controller:'TaskAplCtrl'
+        })
+
+        .state('task-detail',{
+          cache:false,
+          params:{"dtltask":null},
+          templateUrl:'templates/task-detail.html',
+          controller:'TaskDetailCtrl'
+        })
+
+        .state('task2deal-detail',{
+          cache:false,
+          params:{"dtltask2deal":null},
+          templateUrl:'templates/task2deal-detail.html',
+          controller:'Task2DealDetailCtrl'
         })
 
   // if none of the above states are matched, use this as the fallback

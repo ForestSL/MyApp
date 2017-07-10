@@ -1,6 +1,13 @@
 <ion-view id="userMessagesView" hide-tabs="true"
           cache-view="false"
-          view-title="会话框">
+          view-title= {{user_list.userPhone}}>
+
+  <ion-nav-buttons side="left">
+        <button class="button button-icon " ui-sref="tab.chats">
+        <i class="icon ion-ios-arrow-back"></i>
+        返回
+        </button>
+  </ion-nav-buttons>
 
     <div class="loader-center" ng-if="!doneLoading">
         <div class="loader">
@@ -10,30 +17,45 @@
     <ion-content has-bouncing="true" class="has-header has-footer"
                  delegate-handle="userMessageScroll">
         <div id="dialog">
-        <div ng-repeat="message in messages" class="message-wrapper"
+        <div ng-repeat="message in messages track by $index" class="message-wrapper"
              on-hold="onMessageHold($event, $index, message)">
             <div ng-if="user !== message.fromID">
                 <img ng-click="viewProfile(message)" class="profile-pic left"
                      ng-src="{{toUser.pic}}" onerror="onProfilePicError(this)" />
                 <div class="chat-bubble left">
-                    <div class="message">{{message.content.text}}</div>
-                    <div class="message-detail">
+                    <div class="message" ng-if="message.contentType == 'text'">{{message.content.text}}</div>
+                    <div class="message" ng-if="message.contentType == 'image'">
+                      1
+                      <img src="message.content.media_crc32">
+                      </div>
+                    <div class="message" ng-if="message.contentType == 'image'">
+                      2
+                      <img src="message.content.media_id">
+                    </div>
+                    <div class="message" ng-if="message.contentType == 'image'">
+                      3{{message.content.localThumbnailPath}}
+                      <img src="message.content.localThumbnailPath">
+                    </div>
+                    <!--<div class="message-detail">
                         <span ng-click="viewProfile(message)"
                                     class="bold">{{message.fromUser.nickname}}</span>,
                         <span am-time-ago="message.createTimeInSeconds"></span>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <div ng-if="user === message.fromID">
                 <img ng-click="viewProfile(message)" class="profile-pic right"
                      ng-src="{{user.pic}}" onerror="onProfilePicError(this)" />
                 <div class="chat-bubble right">
-                    <div class="message">{{message.content.text}}</div>
-                    <div class="message-detail">
+                    <div class="message" ng-if="message.contentType == 'text'">{{message.content.text}}</div>
+                    <div class="message" ng-if="message.contentType == 'image'">
+                      <img src="message.content.localThumbnailPath">
+                      {{message.content.localThumbnailPath}}
+                    </div>                    <!--<div class="message-detail">
                               <span ng-click="viewProfile(message)"
                                     class="bold">{{message.fromUser.nickname}}</span>,
                         <span am-time-ago="message.createTimeInSeconds"></span>
-                    </div>
+                    </div>-->
                 </div>
 
             </div>
@@ -47,14 +69,21 @@
     <!--<form name="sendMessageForm" ng-submit="sendMessage()" novalidate>-->
         <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
             <label class="item-input-wrapper">
-                <textarea ng-model="input.message" value="" placeholder="给{{toUser.username}}发送条消息" required minlength="1" maxlength="1500" msd-elastic></textarea>
+                <textarea ng-model="input.message" value="" placeholder="发送消息" required minlength="1" maxlength="1500" msd-elastic></textarea>
             </label>
             <!--<button class="button button-icon icon ion-android-send" type="submit"-->
                     <!--ng-disabled="!input.message || input.message === ''">-->
             <!--</button>-->
-            <button class="button button-icon icon ion-android-send" type="button"
-                    ng-disabled="!input.message || input.message === ''|| sending == true" ng-click="sendMessage()">
+            <button class="button button-icon icon ion-image" type="button" style="margin-right: 30px"
+                     ng-click="sendPicture()">
             </button>
+
+            <button class="button button-icon icon ion-android-send" type="button"
+                    ng-disabled="!input.message || input.message === ''|| sending == true" 
+                    ng-click="sendMessage()">
+            </button>
+
+            
 
         </ion-footer-bar>
     <!--</form>-->
@@ -77,5 +106,7 @@
                  <!--</button>-->
          <!--</ion-footer-bar>-->
   <!--</ion-view>-->
+
+
 
 

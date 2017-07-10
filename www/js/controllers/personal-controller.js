@@ -30,8 +30,13 @@ angular.module('personal-controller',[])
                 okText:"确认",
                 cancelText:"取消"
             })
-                .then(function(res) {
+                .then(function(res){
                     if(res) {
+                        window.JMessage.logout(function() {
+                            console.log("登出极光成功");
+                                    }, function(errorStr) {
+                             console.log(errorStr);  // 输出错误信息。
+    });
                         $state.go('login');
                     } else {
                        return false;
@@ -41,7 +46,7 @@ angular.module('personal-controller',[])
 
         //滑动跳转
         $scope.onSwipeRight = function() {
-            $state.go("tab.groups");
+            $state.go("tab.task");
         };
 
 		//个人信息

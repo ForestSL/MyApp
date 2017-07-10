@@ -17,10 +17,12 @@
           </button>
         </div>
         <div>
-            <button class="button button-block icon-left ion-chatboxes" ng-if="information.userDepart == information.isLeader">部门聊天</button>  
+            <button class="button button-block icon-left ion-chatboxes" ng-if="information.userDepart == information.isLeader" ui-sref="group-chatting({Depart_list:sorted_lists})">
+                部门聊天
+            </button>  
         </div>
         
-        <br /> 
+        <br> 
 
         <ion-list>
         <!--
@@ -55,7 +57,7 @@
         <ion-item class="item item-divider" class="list_head">
             {{dpt}}
         </ion-item>
-        <ion-item ng-repeat="user_list in user_lists">
+        <ion-item ng-if="user_list.userName != information.userName" ng-repeat="user_list in user_lists" ui-sref="chat-detail({chatId:user_list.userPhone})">
             {{user_list.userName}}
         </ion-item>
     </div>
