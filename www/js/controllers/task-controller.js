@@ -49,7 +49,7 @@ angular.module('task-controller',[])
                 console.log($scope.tasks_state);
             }
         });
-        Task.getTask2Deal("task",$scope.user).success(function(data){//获取待处理任务列表
+        Task.getTask2Deal("task",user).success(function(data){//获取待处理任务列表
             if(data == "fail"){
                 $scope.showErrorMesPopup("error in vacation");
                 console.log("ahsud");

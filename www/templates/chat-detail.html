@@ -1,6 +1,6 @@
 <ion-view id="userMessagesView" hide-tabs="true"
           cache-view="false"
-          view-title= {{user_list.userPhone}}>
+          view-title= "{{user_list.userPhone}}">
 
   <ion-nav-buttons side="left">
         <button class="button button-icon " ui-sref="tab.chats">
@@ -25,16 +25,7 @@
                 <div class="chat-bubble left">
                     <div class="message" ng-if="message.contentType == 'text'">{{message.content.text}}</div>
                     <div class="message" ng-if="message.contentType == 'image'">
-                      1
-                      <img src="message.content.media_crc32">
-                      </div>
-                    <div class="message" ng-if="message.contentType == 'image'">
-                      2
-                      <img src="message.content.media_id">
-                    </div>
-                    <div class="message" ng-if="message.contentType == 'image'">
-                      3{{message.content.localThumbnailPath}}
-                      <img src="message.content.localThumbnailPath">
+                      <img src="{{message.content.localThumbnailPath}}">
                     </div>
                     <!--<div class="message-detail">
                         <span ng-click="viewProfile(message)"
@@ -49,8 +40,7 @@
                 <div class="chat-bubble right">
                     <div class="message" ng-if="message.contentType == 'text'">{{message.content.text}}</div>
                     <div class="message" ng-if="message.contentType == 'image'">
-                      <img src="message.content.localThumbnailPath">
-                      {{message.content.localThumbnailPath}}
+                      <img src="{{message.content.localThumbnailPath}}">
                     </div>                    <!--<div class="message-detail">
                               <span ng-click="viewProfile(message)"
                                     class="bold">{{message.fromUser.nickname}}</span>,
