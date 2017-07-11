@@ -1,11 +1,70 @@
-<ion-view view-title="nimab">
+<ion-view id="userMessagesView" 	
+		  hide-tabs="true"
+          cache-view="false"
+          view-title= "部门群聊">
+
   <ion-nav-buttons side="left">
-        <button class="button button-icon " ui-sref="tab.friends">
+        <button class="button button-icon " ui-sref="tab.chats">
         <i class="icon ion-ios-arrow-back"></i>
         返回
         </button>
   </ion-nav-buttons>
-    <ion-content  overflow-scroll="false">
 
+    <div class="loader-center" ng-if="!doneLoading">
+        <div class="loader">
+            <i class="icon ion-loading-c"></i>
+        </div>
+    </div>
+    <ion-content has-bouncing="true" class="has-header has-footer"
+                 delegate-handle="userMessageScroll">
+        <div id="dialog">
+        <div ng-repeat="message in messages track by $index" class="message-wrapper"
+             on-hold="onMessageHold($event, $index, message)">
+
+            <div ng-if="user !== message.fromID">
+                <img ng-click="viewProfile(message)" class="profile-pic left"
+                     ng-src="{{toUser.pic}}" onerror="onProfilePicError(this)" />
+                <div class="chat-bubble left">
+                    <div class="message" ng-if="message.contentType == 'text'">{{message.content.text}}</div>
+                    <div class="message" ng-if="message.contentType == 'image'">
+                      <img src="{{message.content.localThumbnailPath}}">
+                    </div>
+                </div>
+            </div>
+
+
+            <div ng-if="user === message.fromID">
+                <img ng-click="viewProfile(message)" class="profile-pic right"
+                     ng-src="{{user.pic}}" onerror="onProfilePicError(this)" />
+                <div class="chat-bubble right">
+                    <div class="message" ng-if="message.contentType == 'text'">{{message.content.text}}</div>
+                    <div class="message" ng-if="message.contentType == 'image'">
+                      <img src="{{message.content.localThumbnailPath}}">
+                    </div>                
+                </div>
+            </div>
+
+            <div class="cf"></div>
+
+        	</div>
+        </div>
     </ion-content>
+
+        <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+            <label class="item-input-wrapper">
+                <textarea ng-model="input.message" value="" placeholder="发送消息" required minlength="1" maxlength="1500" msd-elastic></textarea>
+            </label>
+           
+            <button class="button button-icon icon ion-image" type="button" style="margin-right: 30px"
+                     ng-click="sendPicture()">
+            </button>
+            <button class="button button-icon icon ion-android-send" type="button"
+                    ng-disabled="!input.message || input.message === ''|| sending == true" 
+                    ng-click="sendMessage()">
+            </button>
+        </ion-footer-bar>
+    <!--</form>-->
 </ion-view>
+
+
+
