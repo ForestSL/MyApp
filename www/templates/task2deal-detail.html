@@ -25,12 +25,21 @@
             </p>
         </ion-item>
 
-        <ion-item>
+        <ion-item ng-if="task2deal_detail.name == 'Handle vacation request'">
             <button class="button button-small" style="padding-right: 60px;padding-left: 50px;float: left;" ng-click="refuse()">
                 驳回
             </button>
             <button class="button button-small" style="padding-right: 60px;padding-left: 50px;float: right;" ng-click="approve()">
                 同意
+            </button>
+        </ion-item>
+
+        <ion-item ng-if="task2deal_detail.name == 'Adjust vacation request'">
+            <button class="button button-small" style="padding-right: 60px;padding-left: 50px;float: left;" ng-click="giveup()">
+                终止
+            </button>
+            <button class="button button-small" style="padding-right: 60px;padding-left: 50px;float: right;" ng-click="adjust()">
+                调整
             </button>
         </ion-item>
         

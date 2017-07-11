@@ -176,6 +176,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
           controller:'Task2DealDetailCtrl'
         })
 
+        .state('adjust',{
+          cache:false,
+          params:{"ad_task":null},
+          templateUrl:'templates/adjust.html',
+          controller:'TaskAdjustCtrl'
+        })
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 

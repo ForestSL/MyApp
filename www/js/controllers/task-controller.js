@@ -284,13 +284,22 @@ angular.module('task-controller',[])
 //        var temp = $scope.task_detail.createTime;
 //        console.log(temp[1]);
         
+        //放弃请假，不在作出调整
+        $scope.giveup = function(){
+            
+        };
+        //调整请假信息，再次发出请假请求
+        $scope.adjust = function(){
+            $state.go("adjust", {ad_task:$scope.task_detail});
+        };
+
         $scope.back2task = function(){
             $state.go("tab.task");
         };
         })
 
 
-    .controller('Task2DealDetailCtrl', function($scope, $state, $stateParams, Task) {
+    .controller('Task2DealDetailCtrl', function($scope, $state, $stateParams, $ionicPopup, Task) {
 
         $scope.dtltask2deal = $stateParams.dtltask2deal;
         console.log($stateParams.dtltask2deal);
@@ -312,16 +321,71 @@ angular.module('task-controller',[])
         $scope.back2task = function(){
             $state.go("tab.task");
         };
-
+//驳回请假申请
         $scope.refuse = function(){
+            $scope.handle.approve = "false";
+            Task.handleRequest("task",$scope.handle).success(function(data){
+                if(data == "fail"){
+                    console.log("250");
+                    $scope.showErrorMesPopup("处理失败，请刷新列表");
+                }
+                else{
+                    console.log("1");
+                    $scope.showSuccessMesPopup("处理成功");
+                }
+            });
 
         };
-
+        //同意请假
         $scope.approve = function(){
+            Task.handleRequest("task",$scope.handle).success(function(data){
+                if(data == "fail"){
+                    console.log("250");
+                    $scope.showErrorMesPopup("处理失败，请刷新列表");
+                }
+                else{
+                    console.log("1");
+                    $scope.showSuccessMesPopup("处理成功");
+                }
+            });
 
         };
 
-        });
+        //放弃请假，不在作出调整
+        $scope.giveup = function(){
+            
+        };
+        //调整请假信息，再次发出请假请求
+        $scope.adjust = function(){
+            $state.go("adjust", {ad_task:$scope.dtltask2deal});
+        };
+
+
+        $scope.showErrorMesPopup = function(title) {
+            var myPopup = $ionicPopup.show({
+                title: '<b>'+title+'</b>'
+            });
+            $timeout(function() {
+                myPopup.close(); // 2秒后关闭
+            }, 1000);
+        };
+
+        $scope.showSuccessMesPopup = function(title) {
+            var myPopup = $ionicPopup.show({
+                title: '<b>'+title+'</b>'
+            });
+            $timeout(function() {
+                myPopup.close(); // 2秒后关闭
+                $state.go("tab.task");
+            }, 500);
+        };
+
+    })
+
+    .controller('TaskAdjustCtrl', function($scope, $state, $stateParams, Task) {
+        $scope.task2ad = $stateParams.ad_task;
+        console.log($scope.task2ad);
+    });
 /*
     $data.getAnnocement("bulletin",  $scope.user).success(function(data){
                 if(data == "err in post /bulletin"){

@@ -22,9 +22,15 @@
         <script type="text/ng-template" id="任务申请状态.html">
             <ion-list>
             <div>
-                <ion-item  class="item-text-wrap" ng-repeat="task_state in tasks_state | orderBy:task_state.processID:true" ui-sref="task-detail({dtltask:task_state})">
-                    <h>任务ID：{{task_state.processID}}</h>
-                    <label style="float: right;"><p>{{task_state.result}}</p></label>
+                <ion-item  class="item-text-wrap" style="margin-top: 10px" ng-repeat="task_state in tasks_state | orderBy:task_state.processID:true" ui-sref="task-detail({dtltask:task_state})">
+                    <h>
+                        任务ID：{{task_state.processID}}
+                    </h>
+                    <label style="float: right;">
+                        <p>
+                            {{task_state.result}}
+                        </p>
+                    </label>
                     <!--<p>申请时间：{{task_state.time}}<br/></p>-->           
                 </ion-item>
             </div>
@@ -34,9 +40,17 @@
         <script type="text/ng-template" id="待处理任务.html">
             <div class="list">
                 <ion-item  class="item-text-wrap" style="margin-top: 10px" ng-repeat="task2deal in tasks2deal | orderBy:task_state.processID:true" ui-sref="task2deal-detail({dtltask2deal:task2deal})">
-                    <h ng-if="task2deal.name == 'Handle vacation request'">请假申请</h>
-                    <h ng-if="task2deal.name == 'Adjust vacation request'">请假调整</h>
-                    <p>申请时间：{{task2deal.createTime | date:"yyyy-MM-dd HH:mm:ss"}}</p>           
+                    <h ng-if="task2deal.name == 'Handle vacation request'">
+                        请假申请
+                    </h>
+                    <h ng-if="task2deal.name == 'Adjust vacation request'">
+                        请假调整
+                    </h>
+                    <label style="float: right;">
+                        <p>
+                            {{task2deal.createTime | date:"yyyy-MM-dd HH:mm:ss"}}
+                        </p>
+                    </label>      
                 </ion-item>
             </div>
         </script>
