@@ -12,7 +12,6 @@ angular.module('chatting-controller',[])
 
             });
         });
-
         $scope.doRefresh = function() 
         {
             Chats.getAll().then(function(data) 
@@ -81,7 +80,7 @@ angular.module('chatting-controller',[])
                 function(response) 
                 {
                     //加载历史信息
-                    Messages.getAll('single',$scope.toUser,0,10).then(function(data) 
+                    Messages.getAll('single',$scope.toUser,0,20).then(function(data) 
                     {
                         $scope.messages= data;
                         console.log($scope.messages);
@@ -228,7 +227,7 @@ angular.module('chatting-controller',[])
                         // $scope.messages = Messages.getLocalMessage();
                         $scope.$apply(function () 
                         {
-                            Messages.getAll('single',$scope.toUser,0,10).then(function(data) 
+                            Messages.getAll('single',$scope.toUser,0,20).then(function(data) 
                             {
                                 $scope.messages= data;
                             });
@@ -266,7 +265,6 @@ angular.module('chatting-controller',[])
 
 .controller('GroupChatingCtrl', function($scope, $stateParams, MyInfo,Groups, $state) 
 {
-
     //将输入框input.message初始化为空值
     $scope.input={'message':''};
     //初始化默认为不可输入
@@ -280,15 +278,15 @@ angular.module('chatting-controller',[])
     //获取所有部门的人的信息
     $scope.friendList=$stateParams.Depart_list;
     console.log($scope.friendList);
-    //存储部门群聊的groupId
+    //存储部门群聊的groupId,并默认为0
     $scope.groupId = 0;
-    //判断有没有部门群
+    //判断有没有部门群，如果没有就新建一个部门
     window.JMessage.getGroupIDList(function (list) 
     {
         // Success callback.
         $scope.groupList =JSON.parse(list);
         console.log($scope.groupList);
-        for(var  i=0; i< $scope.groupList.length;i++)
+     /*   for(var  i=0; i< $scope.groupList.length;i++)
         {
             console.log("执行了判断");
             window.JMessage.getGroupInfo($scope.groupList[i], function (data) 
@@ -300,92 +298,132 @@ angular.module('chatting-controller',[])
                 if(groupInfor.groupName== $scope.user.DepartName)
                 {
                     //如果已经有部门群，则将$scope.groupId设置为非0
-                $scope.groupId =groupInfor.groupId;
+                    console.log("已经找到了本人所在的群");
+                    $scope.groupId =groupInfor.groupId;
                 }   
             }, 
             function (errorMsg) 
             {
             });
-        }      
+        }
+        */
+        console.log("输出isleader");
+        console.log($scope.user.isLeader);
+        console.log("输出groupId");
+        console.log($scope.groupId );  
+        //如果为部长且没有部门群，则新建一个群
+        if(($scope.user.isLeader!=0)&&($scope.groupList.length==0) )
+        {
+            console.log("开始建群");
+            window.JMessage.createGroup($scope.user.DepartName, 'For Chatting', function (groupId) 
+            {
+                $scope.groupId = groupId;
+                console.log(groupId);
+                $scope.usernameStr = "";
+                var  count = 0;
+                //将同一部门的userName组装成字符串
+                for(var i=0;i<$scope.friendList[myDepart].length;i++)
+                {
+                    $scope.addMemberName = $scope.friendList[myDepart][i].userPhone;
+                    console.log($scope.addMemberName);
+                    if($scope.addMemberName ===$scope.user.userPhone)
+                    {
+                    }
+                    else if(count == 0)
+                    {
+                        $scope.usernameStr = $scope.addMemberName;
+                        count++;    
+                    }
+                    else
+                    {
+                        $scope.usernameStr =  $scope.usernameStr +　',' +  $scope.addMemberName;
+                   
+                    }
+                }
+
+                console.log( $scope.usernameStr);
+                //将本部门的群成员加入群组
+                window.JMessage.addGroupMembers(groupId, $scope.usernameStr, function (res) 
+                {
+                    console.log(res);
+                }, 
+                function (errorMsg) 
+                {
+                    console.log(errorMsg);
+                });
+                //获取本群信息，并将群信息输出
+                window.JMessage.getGroupInfo(groupId, function (data) 
+                {
+                    var groupInfor = JSON.parse(data);
+                    console.log(groupInfor);
+                }, 
+                function (errorMsg) 
+                {
+                });
+            }, 
+            function (errorMsg) 
+            {  
+            });
+        }
+        //如果为部员且没有部门，则弹窗本群已经被解散
+        else if(($scope.user.isLeader==0 )&& ($scope.groupList.length==0))
+        {
+            alert("本群聊已经被部长解散");
+        }
+        //如果已经有了相应的部门
+        else
+        {
+            $scope.groupId = $scope.groupList[0];
+            console.log($scope.groupId);
+        }
     }, 
     function (errorMsg) 
     {      // Error callback.
         console.log(errMsg);
     });
-    //如果没有所在群，是部长，则新建一个群，供给部门聊天
-    if($scope.user.isLeader!=0 && $scope.groupId == 0)
-    {
-        console.log("开始建群");
-        window.JMessage.createGroup($scope.user.DepartName, 'For Chatting', function (groupId) 
-        {
-            $scope.usernameStr = "";
-            console.log(groupId);
-            $scope.groupId = groupId;
-            var  count = 0;
-            for(var i=0;i<$scope.friendList[myDepart].length;i++)
-            {
-               $scope.addMemberName = $scope.friendList[myDepart][i].userPhone;
-               console.log($scope.addMemberName);
-               if($scope.addMemberName ===$scope.user.userPhone)
-               {
-               }
-               else if(count == 0)
-               {
-                 $scope.usernameStr = $scope.addMemberName;
-                 count++;    
-               }
-               else
-               {
-                    $scope.usernameStr =  $scope.usernameStr +　',' +  $scope.addMemberName;
-                   
-               }
-            }
-
-            console.log( $scope.usernameStr);
-
-            window.JMessage.addGroupMembers(groupId, $scope.usernameStr, function (res) 
-                    {
-                        console.log(res);
-                    }, 
-                    function (errorMsg) 
-                    {
-                        console.log(errorMsg);
-                    });
-        
-            window.JMessage.getGroupInfo(groupId, function (data) 
-            {
-                var groupInfor = JSON.parse(data);
-                console.log(groupInfor);
-            }, 
-            function (errorMsg) 
-            {
-            });
-        }, 
-       function (errorMsg) 
-       {  
-       });
-    }
-    //如果没有所在群，是部员，则提醒本群已经被解散
-    else if($scope.user.isLeader==0 && $scope.groupId == 0)
-    {
-        alert("本群聊已经被部长解散");
-    }
+    
 
     $scope.$on('$ionicView.enter', function(e)
     {
-        /* $scope.sendMessage = function()
-         {
-            window.JMessage.sendGroupTextMessage($scope.groupId, 'content',function(response) 
+       window.JMessage.enterGroupConversation('targetGroupId',function() 
+       {
+        // 进入会话成功。
+        //加载历史信息
+        Messages.getAll('group',$scope.groupId,0,10).then(function(data) 
+        {
+            $scope.messages= data;
+            console.log($scope.messages);
+        });
+
+        }, 
+        function(errorMsg) 
+        {
+            console.log(errorMsg)
+        })
+       //发送文本信息
+        $scope.sendMessage = function ()
+        {
+            $scope.sending = true;
+            window.JMessage.sendSingleTextMessage($scope.groupId, $scope.input.message, null,
+            function(response) 
             {
-            var message = JSON.parse(response);
-            }, 
-            function(errorMsg) 
+                $scope.$apply(function () 
+                {
+                    Messages.getAll('group',$scope.groupId,0,20).then(function(data) 
+                    {
+                        $scope.messages= data;
+                    });
+                });                  
+            },  
+            function(errorMsg)
             {
-                console.log(errorMsg);  // 输出错误信息。
-            });
-         }*/
-       
-    });
+                alert(errorMsg);   // 输出错误信息。
+            }); 
+                            //发送消息结束后将对话框置为空
+            $scope.input={'message':''};
+            $scope.sending = false;
+        };
 
        
+    });      
 })
