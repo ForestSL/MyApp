@@ -246,7 +246,7 @@ angular.module('task-controller',[])
 
         })
 
-    .controller('TaskDetailCtrl', function($scope, $state, $stateParams, Task) {
+    .controller('TaskDetailCtrl', function($scope, $state, $stateParams, Task, $ionicPopup, MyInfo) {
 
         $scope.dtltask = $stateParams.dtltask;
         console.log($stateParams.dtltask);
@@ -262,17 +262,16 @@ angular.module('task-controller',[])
                 $scope.task_detail = JSON.parse(temp);
                 console.log($scope.task_detail);
                 console.log($scope.task_detail.createTime);
-                console.log($scope.task_detail.createTime[1]);
-                var string = $scope.task_detail.createTime;
-                console.log(string);
-                var string1 = string.substring(0, string.length-19);
-                var string2 = string.substring(11, string.length-10);
-                string = "";
-                string = string1 + ' ' + string2;
-                console.log(string1);
-                console.log(string2);
-                console.log(string);
-                $scope.task_detail.createTime = string;
+//                // var string = $scope.task_detail.createTime;
+                // console.log(string);
+                // var string1 = string.substring(0, string.length-19);
+                // var string2 = string.substring(11, string.length-10);
+                // string = "";
+                // string = string1 + ' ' + string2;
+                // console.log(string1);
+                // console.log(string2);
+                // console.log(string);
+                // $scope.task_detail.createTime = string;
 //                $scope.task_detail.createTime[10] = ' ';
 //                for(var i = 19; i < 29; i++){
 //                    $scope.task_detail.createTime[i] = '';
@@ -286,6 +285,39 @@ angular.module('task-controller',[])
         
         //放弃请假，不在作出调整
         $scope.giveup = function(){
+            $ionicPopup.confirm({
+                title: "确认终止当前申请？",
+                okText:"确认",
+                cancelText:"取消"
+            })
+                .then(function(res) {
+                    if(res) {
+                        var user = JSON.parse(MyInfo.getLocalInfor());
+                        var temp = {userID:"",
+                                    id:"",
+                                    numOfDays:"",
+                                    startTime:"",
+                                    motivation:"",
+                                    send:"false"};
+                        temp.userID = user.userID;
+                        temp.id = $scope.task_detail.id;
+                        // temp.numOfDays = $scope.task_detail.startTime;
+                        // temp.motivation = $scope.task_detail.motivation;
+                        Task.adjustRequest("task",  temp).success(function(data){
+                            if(data == "fail"){
+                                $scope.showErrorMesPopup("终止请求失败");
+                                console.log("22222");
+                            }
+                            else{
+                                $scope.showSuccessMesPopup("申请终止");
+                                
+                                }
+                            });
+                        $state.go('tab.task');
+                    } else {
+                       return false;
+                    }
+                });
             
         };
         //调整请假信息，再次发出请假请求
@@ -299,7 +331,7 @@ angular.module('task-controller',[])
         })
 
 
-    .controller('Task2DealDetailCtrl', function($scope, $state, $stateParams, $ionicPopup, Task) {
+    .controller('Task2DealDetailCtrl', function($scope, $state, $stateParams, $ionicPopup, $timeout,Task, MyInfo) {
 
         $scope.dtltask2deal = $stateParams.dtltask2deal;
         console.log($stateParams.dtltask2deal);
@@ -317,7 +349,11 @@ angular.module('task-controller',[])
             }
         });
 
-        
+        $scope.handle = {id:"0",
+                        approve:"true",
+                        motivation:""};
+        $scope.handle.id = $scope.dtltask2deal.id;
+
         $scope.back2task = function(){
             $state.go("tab.task");
         };
@@ -353,6 +389,39 @@ angular.module('task-controller',[])
 
         //放弃请假，不在作出调整
         $scope.giveup = function(){
+            $ionicPopup.confirm({
+                title: "确认终止当前申请？",
+                okText:"确认",
+                cancelText:"取消"
+            })
+                .then(function(res) {
+                    if(res) {
+                        var user = JSON.parse(MyInfo.getLocalInfor());
+                        var temp = {userID:"",
+                                    id:"",
+                                    numOfDays:"",
+                                    startTime:"",
+                                    motivation:"",
+                                    send:"false"};
+                        temp.userID = user.userID;
+                        temp.id = $scope.task2deal_detail.id;
+                        // temp.numOfDays = $scope.task_detail.startTime;
+                        // temp.motivation = $scope.task_detail.motivation;
+                        Task.adjustRequest("task",  temp).success(function(data){
+                            if(data == "fail"){
+                                $scope.showErrorMesPopup("终止请求失败");
+                                console.log("22222");
+                            }
+                            else{
+                                $scope.showSuccessMesPopup("申请终止");
+                                console.log($scope.task);
+                                }
+                            });
+                        $state.go('tab.task');
+                    } else {
+                       return false;
+                    }
+                });
             
         };
         //调整请假信息，再次发出请假请求
@@ -372,7 +441,8 @@ angular.module('task-controller',[])
 
         $scope.showSuccessMesPopup = function(title) {
             var myPopup = $ionicPopup.show({
-                title: '<b>'+title+'</b>'
+                title: '<b>'+title+'</b>',
+                template: '<p style="text-align: center"><ion-spinner icon="android" class="spinner-positive"></ion-spinner></p>'
             });
             $timeout(function() {
                 myPopup.close(); // 2秒后关闭
@@ -382,9 +452,78 @@ angular.module('task-controller',[])
 
     })
 
-    .controller('TaskAdjustCtrl', function($scope, $state, $stateParams, Task) {
+    .controller('TaskAdjustCtrl', function($scope, $state, Task, $ionicPopup, $stateParams, $timeout, MyInfo) {
         $scope.task2ad = $stateParams.ad_task;
         console.log($scope.task2ad);
+        $scope.task2ad = $stateParams.ad_task;
+        console.log($scope.task2ad);
+        var user = JSON.parse(MyInfo.getLocalInfor());
+        console.log(user);
+        $scope.task = {userID:"",
+                    id:"",
+                    numOfDays:"",
+                    startTime:"",
+                    motivation:"",
+                    send:"true"};
+        $scope.master = {userID:"",
+                    id:"",
+                    numOfDays:"",
+                    startTime:"",
+                    motivation:"",
+                    send:"true"};
+        
+
+
+        $scope.submit = function(){
+            $scope.task.userID = user.userID;
+            $scope.task.id = $scope.task2ad.id;
+            console.log($scope.task);
+            Task.adjustRequest("task",  $scope.task).success(function(data){
+                if(data == "fail"){
+                    $scope.showErrorMesPopup("申请发送失败");
+                    console.log("22222");
+                }
+                else{
+                    $scope.showSuccessMesPopup("成功发送申请");
+                    console.log($scope.task);
+                }
+          });
+
+            // $scope.task.apldate = new Date();
+            // console.log($scope.task);
+        };
+
+        $scope.showErrorMesPopup = function(title) {
+            var myPopup = $ionicPopup.show({
+                title: '<b>'+title+'</b>'
+            });
+            $timeout(function() {
+                myPopup.close(); // 2秒后关闭
+            }, 1000);
+        };
+
+        $scope.showSuccessMesPopup = function(title) {
+            var myPopup = $ionicPopup.show({
+                title: '<b>'+title+'</b>',
+                template: '<p style="text-align: center"><ion-spinner icon="android" class="spinner-positive"></ion-spinner></p>'
+            });
+            $timeout(function() {
+                myPopup.close(); // 2秒后关闭
+                $state.go("tab.task");
+            }, 500);
+        };
+
+
+
+        $scope.reset = function() {
+            $scope.task = angular.copy($scope.master);
+            console.log($scope.task);
+        };
+        $scope.reset();
+
+        $scope.back2task = function(){
+            $state.go("tab.task");
+        };
     });
 /*
     $data.getAnnocement("bulletin",  $scope.user).success(function(data){

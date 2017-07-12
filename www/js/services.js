@@ -267,10 +267,17 @@ angular.module('starter.services', [])
             return $http.post(url+"/vacation/handle/detail",requestParams); 
           },
 
+          //处理任务
           handleRequest:function(tableName,requestParams){
             var url = config.basePath+tableName;
             console.log(url);
             return $http.post(url+"/vacation/handlerequest",requestParams); 
+          },
+          //调整任务
+          adjustRequest:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/vacation/adjustrequest",requestParams);
           }
         }
       });
