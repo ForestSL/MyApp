@@ -162,28 +162,7 @@ angular.module('starter.services', [])
           };
         }])
 
-    .factory('Colleagues',function($http)
-    {
-      var colleagues=[];
-      return{
-        initColleagues:function(){
-            //将路由定位到后台user内
-            var url =config.basePath+"user";
-            $http.get(url).success(function(data){
-            colleagues=data;
-              
-              //console.log(data);
-             // console.log(colleagues);
-              //console.log(colleagues[1]);
-              //console.log(colleagues[2]["userName"]);
 
-            });
-        },
-        getAll:function(){
-          return colleagues;
-        }
-      }
-    })
     .factory('Group', ['$q',function($q) {
             var groups = [];
             return {
@@ -300,6 +279,27 @@ angular.module('starter.services', [])
             var url = config.basePath+tableName;
             console.log(url);
             return $http.post(url+"/vacation/adjustrequest",requestParams);
+          },
+          //删除任务状态列表中的已完成任务
+          TaskDelete:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/vacation/delete",requestParams);
+          },
+          //获取其他任务name
+          getOTaskName:function(tableName){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.get(url+"/deploy");
           }
         }
-      });
+      })
+
+    .factory('Colleagues',function($http){
+      return{
+          getColleagus:function(tableName){
+            var url = config.basePath+"user";
+            return $http.get(url);
+          }
+      }
+    });

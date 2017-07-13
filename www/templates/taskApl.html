@@ -6,28 +6,46 @@
         返回
         </button>
     </ion-nav-buttons>
-    <ion-content>
-        <div style="margin-top: 50px;margin-left: 10px;margin-right: 10px">
-<!--               <label class="item item-input button-clear">
-                    <label style="color:#0A0A0A">请假类型：</label>
-                    <input type="text">
-                </label>
--->               
+
+    <div class="bar subheader-bar has-header">
+        <div class="row text-center">
+            <div class="col two-level-nav" ng-click="showTab('请假')" ng-class="{'blue':isOne}">
+            请假
+            </div>
+            <div class="col two-level-nav" ng-click="showTab('其他')" ng-class="{'blue':isTwo}">
+            其他
+            </div>
+        </div>
+    </div>
+
+    <ion-content class="has-subheader" >
+        
+        <div ng-include="'请假.html'" ng-if="tabIndex=='请假'"></div>
+        <div ng-include="'其他.html'" ng-if="tabIndex=='其他'"></div>
+
+        <script type="text/ng-template" id="请假.html">
+            <div style="margin-top: 50px;margin-left: 10px;margin-right: 10px">
+              
             <form novalidate>
                 请假时间:
-                <input type="textarea" placeholder="2017-01-01" ng-model="task.starTime" style="margin-left: 20px;width: 65%">
+                <input type="textarea" placeholder="2017-01-01" ng-model="task.startTime" style="margin-left: 20px;width: 65%">
                 <br><br>
                 请假天数:
-                <input type="textarea" placeholder="100天" ng-model="task.numOfDays" style="margin-left: 20px;width: 65%">
+                <input type="textarea" placeholder="100" ng-model="task.numOfDays" style="margin-left: 20px;width: 65%">
                 <br><br>
                 请假原因:
                 <input type="textarea" placeholder="回家生猴子" ng-model="task.motivation" style="margin-left: 20px;width: 65%">
                 <br><br>
                 <button class="button button-block button-positive" ng-click="submit()">
-                    SUBMIT
+                    提交
                 </button>
             </form>
-            <!--<form>
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="其他.html">
+            <div style="margin-top: 50px;margin-left: 10px;margin-right: 10px">
+            <form>
                 <div>
                     <label>请假类型：</label>
                     <select style="margin-left: 50px">
@@ -37,27 +55,12 @@
                     <option>事假</option>
                     <option>婚假</option>
                     </select>
-                </div>
-                <br/>
-                <div>
-                    <label style="float: left;">开始时间：</label>
-                    <input type="textarea" style="margin-left: 20px;width: 60%">
-                </div>
-                <br/>
-                <div>
-                    <label style="float: left;">结束时间：</label>
-                    <input type="textarea" style="margin-left: 20px;width: 60%">
-                </div>
-                <br/>
-                <div>
-                    <label style="float: left;">请假原因：</label><p></p>
-                    <input type="textarea" style="margin-left: 20px;width: 60%;height: 120px">
-                </div>
-            </ion-item>
-            <br/>
-        <div class="padding">
-            <button class="button button-block button-positive">提交</button>
+                </div><br>
+            <button class="button button-block button-positive" ng-click="Osubmit()">
+                提交
+            </button>
+        </form>
         </div>
-        </div></form>-->
+        </script>
     </ion-content>
 </ion-view>

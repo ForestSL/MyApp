@@ -70,23 +70,23 @@ angular.module('chatting-controller',[])
             $scope.sending = true;
             window.JMessage.sendSingleTextMessage($scope.toUser, $scope.input.message, null,
             function(response) 
+            {
+                $scope.$apply(function () 
                 {
-                    $scope.$apply(function () 
+                    Messages.getAll('single',$scope.toUser,0,20).then(function(data) 
                     {
-                        Messages.getAll('single',$scope.toUser,0,10).then(function(data) 
-                        {
-                            $scope.messages= data;
-                        });
+                        $scope.messages= data;
                     });
+                });
                               
-                },  
-                function(errorMsg)
-                {
-                    alert(errorMsg);   // 输出错误信息。
-                }); 
+            },  
+            function(errorMsg)
+            {
+                alert(errorMsg);   // 输出错误信息。
+            }); 
                 //发送消息结束后将对话框置为空
-                $scope.input={'message':''};
-                $scope.sending = false;
+            $scope.input={'message':''};
+            $scope.sending = false;
         };
         //发送图片
         $scope.sendPicture = function()
@@ -154,7 +154,7 @@ angular.module('chatting-controller',[])
                             $cordovaCamera.getPicture(options).then(function (imageURI) 
                             {
                                 //准备开始发送图片
-                                window.JMessage.sendSingleImageMessage($scope.toUser,imageURI,function(response) 
+                                window.JMessage.sendSingleImageMessage($scope.toUser,imageURI,'',function(response) 
                                 {
                                     var message = JSON.parse(response);
                                     console.log(message);
@@ -171,7 +171,7 @@ angular.module('chatting-controller',[])
                                 function(errorMsg) 
                                 {
                                     // 输出错误信息。
-                                    alert(errorMsg);  
+                                alert(errorMsg);  
                                 });
                             }, 
                             function (err) 

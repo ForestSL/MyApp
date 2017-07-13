@@ -22,16 +22,38 @@
         <script type="text/ng-template" id="任务申请状态.html">
             <ion-list>
             <div>
-                <ion-item  class="item-text-wrap" style="margin-top: 10px" ng-repeat="task_state in tasks_state | orderBy:task_state.processID:true" ui-sref="task-detail({dtltask:task_state})">
-                    <h>
-                        任务ID：{{task_state.processID}}
+                <ion-item  class="item-text-wrap" style="margin-top: 10px" ng-repeat="task_state in tasks_state | orderBy:task_state.create_at:true" ui-sref="task-detail({dtltask:task_state})">
+                <!-- 任务名称 -->
+                    <h ng-if="task_state.name == 'vacation'">
+                        请假申请
+                    </h>
+                    <h ng-if="task_state.name == '出差'">
+                        出差申请
+                    </h>
+                    <h ng-if="task_state.name == '填表'">
+                        表格申请
+                    </h>
+                    <h ng-if="task_state.name == '聚餐'">
+                        聚餐申请
                     </h>
                     <label style="float: right;">
-                        <p>
-                            {{task_state.result}}
-                        </p>
+                        {{task_state.result}}
                     </label>
-                    <!--<p>申请时间：{{task_state.time}}<br/></p>-->           
+                <!-- 任务状态 -->
+<!--                     <div ng-if="task_state.result == 'waiting'" class = "t_result_wait">
+                        {{task_state.result}}
+                    </div>
+                    <div ng-if="task_state.result == 'approve'" class = "t_result_ap">
+                        {{task_state.result}}
+                    </div>
+                    <div ng-if="task_state.result == 'disapprove'" class = "t_result_disap">
+                        {{task_state.result}}
+                    </div> -->
+
+                    <!--<p>申请时间：{{task_state.time}}<br/></p>-->    
+                    <ion-option-button class="button-assertive" ng-if="task_state.state == 'complete'" ng-click="remove($event,task_state)">
+                        删除
+                    </ion-option-button>       
                 </ion-item>
             </div>
             </ion-list>

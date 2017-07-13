@@ -1,5 +1,5 @@
 angular.module('login-controller',[])
-	.controller('LoginCtrl', function($scope,$state,MyInfo,$data,$timeout,$ionicPopup,Colleagues) {
+	.controller('LoginCtrl', function($scope,$state,MyInfo,$data,$timeout,$ionicPopup) {
         
         $scope.input={
             account:"",
@@ -31,7 +31,7 @@ angular.module('login-controller',[])
                    var user = JSON.stringify(data);
                    
                    MyInfo.initlocalInfor(user);
-                   Colleagues.initColleagues();
+//                   Colleagues.initColleagues();
 
                    //console.log("local information");
                   // console.log(MyInfo.getLocalInfor());

@@ -25,43 +25,15 @@
         <br> 
 
         <ion-list>
-        <!--
-        <ion-item class="item-avatar" ng-repeat="d in data|orderBy:dd">
-            <td>{{d.age}}</td>
-            <td>{{d.name}}</td>
-        </ion-item>
-        <ion-item class="item-avatar" ng-repeat="d in data|orderBy:cc">
-            <td ng-bind="d.age">{{d.age}}</td>
-            <td ng-bind="d.name">{{d.name}}</td>
-        </ion-item>-->
-     
-     <!--   
-            <ion-item class="item-avatar" ng-repeat = "list in lists|orderBy:depart" href="#">
-                <img src="venkman.jpg">
-                <h2>{{list.userName}}</h2>
+
+            <div data-ng-repeat="(dpt, user_lists) in sorted_lists">
+                <ion-item class="item item-divider" class="list_head">
+                    {{dpt}}
+                </ion-item>
+            <ion-item ng-if="user_list.userName != information.userName" ng-repeat="user_list in user_lists" ui-sref="chat-detail({chatId:user_list.userPhone})">
+                {{user_list.userName}}
             </ion-item>
-            -->
-
-<!--
-    <div data-ng-repeat="(letter, authors) in sorted_users">
-        <ion-item class="item item-divider" id="index_{{letter}}">
-            {{letter}}
-        </ion-item>
-        <ion-item ng-repeat="author in authors">
-            {{author.first_name}} {{author.last_name}}
-        </ion-item>
-    </div>
--->
-
-    <div data-ng-repeat="(dpt, user_lists) in sorted_lists">
-        <ion-item class="item item-divider" class="list_head">
-            {{dpt}}
-        </ion-item>
-        <ion-item ng-if="user_list.userName != information.userName" ng-repeat="user_list in user_lists" ui-sref="chat-detail({chatId:user_list.userPhone})">
-            {{user_list.userName}}
-        </ion-item>
-    </div>
-
+            </div>
         </ion-list>
     </ion-content>
 </ion-view>

@@ -67,7 +67,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
         //会话列表
         .state('tab.chats', {
           url: '/chats',
-          cache:'false',
+          cache:false,
           views: {
               'tab-chats': {
                 templateUrl: 'templates/tab-chats.html',
@@ -99,7 +99,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
         //好友列表
         .state('tab.friends', {
           url: '/friends',
-          cache:'false',
+          cache:false,
           views: {
             'tab-friends': {
               templateUrl: 'templates/tab-friends.html',
@@ -126,7 +126,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
         //个人信息部分
         .state('tab.account', {
           url: '/account',
-          cache:'false', 
+          cache:false, 
           views: {
             'tab-account': {
               templateUrl: 'templates/tab-personal.html',
@@ -137,7 +137,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
         //个人详细信息
         .state('information',{
           url:'/information',
-          cache:'false', 
+          cache:false, 
           templateUrl:'templates/personal-infor.html',
           controller:'PersonalInforCtrl'
         })
@@ -158,6 +158,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 
         .state('taskApl',{
           url:'/taskApl',
+          cache:false,
           templateUrl:'templates/taskApl.html',
           controller:'TaskAplCtrl'
         })
