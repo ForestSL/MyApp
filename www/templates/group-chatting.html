@@ -21,7 +21,10 @@
         <div ng-repeat="message in messages track by $index" class="message-wrapper"
              on-hold="onMessageHold($event, $index, message)">
 
-            <div ng-if="user !== message.fromID">
+            <div ng-if="userName !== message.fromID">
+                <div class="nickname">
+                    {{message.fromUser.nickname}}
+                </div>
                 <img ng-click="viewProfile(message)" class="profile-pic left"
                      ng-src="{{toUser.pic}}" onerror="onProfilePicError(this)" />
                 <div class="chat-bubble left">
@@ -33,7 +36,7 @@
             </div>
 
 
-            <div ng-if="user === message.fromID">
+            <div ng-if="userName === message.fromID">
                 <img ng-click="viewProfile(message)" class="profile-pic right"
                      ng-src="{{user.pic}}" onerror="onProfilePicError(this)" />
                 <div class="chat-bubble right">

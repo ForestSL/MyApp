@@ -67,7 +67,6 @@ angular.module('starter.services', [])
                     }, function(errorMsg) {
                         console.log(errorMsg);  // 输出错误信息。
                     });
-                console.log(deferred.promise);
                 return deferred.promise;
             },
             getLocalMessage: function(){
@@ -171,7 +170,7 @@ angular.module('starter.services', [])
             //将路由定位到后台user内
             var url =config.basePath+"user";
             $http.get(url).success(function(data){
-              colleagues=data;
+            colleagues=data;
               
               //console.log(data);
              // console.log(colleagues);
@@ -185,7 +184,7 @@ angular.module('starter.services', [])
         }
       }
     })
-    .factory('Groups', ['$q',function($q) {
+    .factory('Group', ['$q',function($q) {
             var groups = [];
             return {
                 getAll: function() {
@@ -201,7 +200,6 @@ angular.module('starter.services', [])
                 },
                 getDetail: function(groupId){
                     var deferred = $q.defer();
-                    alert(groupId);
                     window.JMessage.getGroupInfo(groupId,
                         function(response){
                             deferred.resolve(JSON.parse(response));
@@ -209,8 +207,32 @@ angular.module('starter.services', [])
                             alert(error);
                         });
                     return deferred.promise;
+                },
+                createGroup: function(groupName){
+                  var deferred = $q.defer();
+                  window.JMessage.createGroup(groupName,"For Department Chatting!",
+                    function (groupId){
+                          deferred.resolve(groupId)
+                  },
+                  function (errorMsg) {
+                    console.log(errorMsg);
+                  });
+                  return deferred.promise;
+                },
+                addMembers: function(groupId,usernameStr){
+                  var deferred = $q.defer();
+                  console.log(groupId);
+                  console.log(usernameStr);
+                  window.JMessage.addGroupMembers(groupId,usernameStr,function (){
+                    return  deferred.resolve(true);
+                  }, function (errorMsg) {
+                 // Error callback.
+                    deferred.reject(false);
+                    console.log(errorMsg);
+                  });
+                  return deferred.promise;
                 }
-            };
+            }
         }])
 
     .factory('$data',function($http){

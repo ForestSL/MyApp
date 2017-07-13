@@ -37,6 +37,14 @@ img.profile-pic.right {
     right: 10px;
 }
 
+.nickname{
+    font-size:15px;
+    font-weight: lighter;
+    margin-left: 10px;
+    line-height: 5px;
+}
+
+
 .ion-email {
     float: right;
     font-size: 32px;

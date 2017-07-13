@@ -15,7 +15,7 @@
         </div>
     </div>
     <ion-content class="has-subheader" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
-
+    <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <div ng-include="'任务申请状态.html'" ng-if="tabIndex=='任务申请状态'"></div>
         <div ng-include="'待处理任务.html'" ng-if="tabIndex=='待处理任务'"></div>
 
