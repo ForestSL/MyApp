@@ -87,23 +87,42 @@ angular.module('task-controller',[])
                         var alluser = JSON.parse(JSON.stringify(data));
                         console.log(alluser);
                         $scope.tasks2deal = new Array();
+                        console.log($scope.tasks2deal);
                         // var count = 0;
-                        var temp0 =  {id:"",userID:"",userName:"",name:"",creat_at:"",content:""};
-                        var temp0 =  {id:"",userID:"",userName:"",name:"",creat_at:"",content:""};
+                        // var abc =  {id:"",userID:"",userName:"",name:"",creat_at:"",content:""};
+                        // console.log(abc);
+                        
+                        console.log(vacation_task.length);
                         for(var i = 0; i < vacation_task.length; i++){//将请假和其他任务两个不同的流程数据整理合并
-                            temp = temp0;
-                            temp.name = vacation_task[i].name;
-                            temp.id = vacation_task[i].id;
-                            temp.userID = vacation_task[i].assignee;
-                            temp.creat_at = $filter('date')(vacation_task[i].createTime,'yyyy-MM-dd HH:mm:ss');                            temp.content = vacation_task[i].description;
+                            console.log(vacation_task[i]);
+                            var tp =  {id:"",userID:"",userName:"",name:"",create_at:"",content:""};
+                            // console.log(tp);
+                            // console.log(tp0);
+                            // tp = tp0;
+                            tp.name = vacation_task[i].name;
+                            // console.log(i);
+                            // console.log(tp);
+                            tp.id = vacation_task[i].id;
+                            // console.log(i);
+                            // console.log(tp);
+                            tp.userID = vacation_task[i].assignee;
+                            // console.log(i);
+                            // console.log(tp);
+                            tp.create_at = $filter('date')(vacation_task[i].createTime,'yyyy-MM-dd HH:mm:ss');
+                            // console.log(i);
+                            // console.log(tp);
+                            tp.content = vacation_task[i].description;
+                            // console.log(i);
+                            // console.log(tp);
                             for(var j = 0; j < alluser.length; j++)
-                                if(temp.userID == alluser[j].userID)
-                                    temp.userName = alluser[j].userName;
-                            $scope.tasks2deal.push(temp);
+                                if(tp.userID == alluser[j].userID)
+                                    tp.userName = alluser[j].userName;
+                            console.log(tp);
+                            $scope.tasks2deal.push(tp);
                             // count++;
-                            console.log($scope.tasks2deal);
+                            
                         }
-                
+                        console.log($scope.tasks2deal);
                         Task.getOT2Deal("task",user).success(function(data){//获取待处理非请假任务列表
                             if(data == "fail"){
                                 $scope.showErrorMesPopup("error in vacation");
@@ -207,7 +226,7 @@ angular.module('task-controller',[])
 
 
 		})
-    .controller('TaskAplCtrl',function($scope, $state, Task, $ionicPopup, $timeout, MyInfo) {
+    .controller('TaskAplCtrl',function($scope, $state, Task, $ionicPopup, $timeout, MyInfo ,Colleagues) {
 
 //-------------------------------界面上tab界面切换---------------------------------
         $scope.tabIndex = '请假';
@@ -243,8 +262,17 @@ angular.module('task-controller',[])
                     startTime:"123141324",
                     motivation:"aiiiiiiiiiiiifhrbawuiergab ewdurq"};
         //获取用户的相关数据
-  		 var user = JSON.parse(MyInfo.getLocalInfor());          
-          
+  		var user = JSON.parse(MyInfo.getLocalInfor());          
+        $scope.my_infor = user; 
+        Colleagues.getColleagus().success(function(data){//获取所有用户信息
+            if(data == "err"){
+                console.log("err");
+            }
+            else{
+                $scope.alluser = JSON.parse(JSON.stringify(data));
+                console.log(alluser);
+            }
+        }); 
 
 //-------------------------------submit方法，提交表单数据---------------------------------
 //
@@ -352,7 +380,8 @@ angular.module('task-controller',[])
                 $scope.task_detail = JSON.parse(temp);
                 console.log($scope.task_detail);
                 console.log($scope.task_detail.createTime)
-                console.log($scope.task_detail.createTime);
+                $scope.reason = $scope.task_detail.description.split("Reason: ")[1];
+                console.log($scope.reason);
             }
         });
 
@@ -477,16 +506,31 @@ angular.module('task-controller',[])
 //                    return $scope.handle.motivation;
                     console.log($scope.handle.motivation);
                     $scope.handle.approve = "false";
-                    Task.handleRequest("task",$scope.handle).success(function(data){
-                        if(data == "fail"){
-                            console.log("250");
-                            $scope.showErrorMesPopup("处理失败，请刷新列表");
-                        }       
-                        else{
-                            console.log("1");
-                            $scope.showSuccessMesPopup("处理成功");
-                        }  
-                    });
+                    if($scope.dtltask2deal.name == "Handle vacation request"){
+                        Task.handleRequest("task",$scope.handle).success(function(data){
+                            if(data == "fail"){
+                                console.log("250");
+                                $scope.showErrorMesPopup("处理失败，请刷新列表");
+                            }       
+                            else{
+                                console.log("1");
+                                $scope.showSuccessMesPopup("处理成功");
+                            }  
+                        });
+                    }
+                    else{
+                        console.log($scope.handle);
+                        Task.handleOtherRequest("task",$scope.handle).success(function(data){
+                            if(data == "fail"){
+                                console.log("250");
+                                $scope.showErrorMesPopup("处理失败，请刷新列表");
+                            }       
+                            else{
+                                console.log("1");
+                                $scope.showSuccessMesPopup("处理成功");
+                            }  
+                        });
+                    }
                 }
                 }]
             });
@@ -500,17 +544,30 @@ angular.module('task-controller',[])
 //-----------------------------同意请假-----------------------------------
 
         $scope.approve = function(){
-            Task.handleRequest("task",$scope.handle).success(function(data){
-                if(data == "fail"){
-                    console.log("250");
-                    $scope.showErrorMesPopup("处理失败，请刷新列表");
-                }
-                else{
-                    console.log("1");
-                    $scope.showSuccessMesPopup("处理成功");
-                }
-            });
-
+            if($scope.dtltask2deal.name == "Handle vacation request"){
+                Task.handleRequest("task",$scope.handle).success(function(data){
+                    if(data == "fail"){
+                        console.log("250");
+                        $scope.showErrorMesPopup("处理失败，请刷新列表");
+                    }
+                    else{
+                        console.log("1");
+                        $scope.showSuccessMesPopup("处理成功");
+                    }
+                });
+            }
+            else{
+                Task.handleOtherRequest("task",$scope.handle).success(function(data){
+                    if(data == "fail"){
+                        console.log("250");
+                        $scope.showErrorMesPopup("处理失败，请刷新列表");
+                    }       
+                    else{
+                        console.log("1");
+                        $scope.showSuccessMesPopup("处理成功");
+                    }  
+                });
+            }
         };
 
 //-------------------------------点击列表中名称为调整请假的任务---------------------------------

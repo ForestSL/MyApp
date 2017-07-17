@@ -311,6 +311,12 @@ angular.module('starter.services', [])
             var url = config.basePath+tableName;
             console.log(url);
             return $http.post(url+"/other/handle/list",requestParams); 
+          },
+          //处理其他任务
+          handleOtherRequest:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/other/handle",requestParams); 
           }
         }
       })

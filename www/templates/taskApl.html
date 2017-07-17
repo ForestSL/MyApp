@@ -60,7 +60,7 @@
                 接收人：
                 <select style="margin-left: 35px" ng-model="otask.receiver">
                     <option  value="">请选择</option><!-- 防止第一个选项是空白 -->
-                    <option value="81">曹春</option>
+                    <option ng-repeat="a_user in alluser" value="{{a_user.userID}}" ng-if="a_user.userID != my_infor.userID">{{a_user.userName}}</option>
                     <!-- <option ng-repeat="OTN in OTaskName" ng-if="OTN.name != 'vacation'">
                         {{OTN.name}}
                     </option> -->

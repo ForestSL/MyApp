@@ -7,7 +7,14 @@
     </ion-nav-buttons>
 
     <ion-content>
-
+        <ion-item>
+                申请人
+                <label style="float: right;">
+                    <p>
+                        {{dtltask2deal.userName}}
+                    </p>
+                </label>
+        </ion-item>
         <ion-item>
                 申请时间
                 <label style="float: right;">
@@ -20,9 +27,20 @@
             <h>
                 申请内容：
             </h>
-            <p style="padding-left: 20px">
-                {{dtltask2deal.content}}
-            </p>
+            <label style="float: right;">
+                <p>
+                    {{dtltask2deal.content}}
+                </p>
+            </label>
+        </ion-item>
+
+        <ion-item ng-if="task2deal_detail.name != 'Handle vacation request' && task2deal_detail.name != 'Adjust vacation request'">
+            <button class="button button-small" style="padding-right: 60px;padding-left: 50px;float: left;" ng-click="refuse()">
+                驳回
+            </button>
+            <button class="button button-small" style="padding-right: 60px;padding-left: 50px;float: right;" ng-click="approve()">
+                同意
+            </button>
         </ion-item>
 
         <ion-item ng-if="task2deal_detail.name == 'Handle vacation request'">
@@ -34,14 +52,14 @@
             </button>
         </ion-item>
 
-        <ion-item ng-if="task2deal_detail.name == 'Adjust vacation request'">
+<!--         <ion-item ng-if="task2deal_detail.name == 'Adjust vacation request'">
             <button class="button button-small" style="padding-right: 60px;padding-left: 50px;float: left;" ng-click="giveup()">
                 终止
             </button>
             <button class="button button-small" style="padding-right: 60px;padding-left: 50px;float: right;" ng-click="adjust()">
                 调整
             </button>
-        </ion-item>
+        </ion-item> -->
         
     </ion-content>
 
