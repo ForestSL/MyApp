@@ -1,6 +1,6 @@
 
 angular.module('task-controller',[])
-	.controller('TaskCtrl',function($scope, $ionicPopup, $state, Task, MyInfo) {
+	.controller('TaskCtrl',function($scope, $ionicPopup, $state, Task, MyInfo, Colleagues) {
 
 //-------------------------------界面上tab界面切换---------------------------------
         $scope.tabIndex = '任务申请状态';

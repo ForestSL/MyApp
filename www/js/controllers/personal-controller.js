@@ -35,7 +35,7 @@ angular.module('personal-controller',[])
                             console.log("登出极光成功");
                                     }, function(errorStr) {
                              console.log(errorStr);  // 输出错误信息。
-    });
+                            });
                         $state.go('login');
                     } else {
                        return false;
@@ -207,7 +207,7 @@ angular.module('personal-controller',[])
         };
     })
 
-    .controller('ModifyCtrl',function($scope, $state,MyInfo,Passsword){
+    .controller('ModifyCtrl',function($scope, $state,MyInfo,Passsword,$timeout,$ionicPopup){
         $scope.back2personal = function(){
             $state.go("tab.account");
         };
@@ -244,15 +244,40 @@ angular.module('personal-controller',[])
 
                 Passsword.modifyPassword(userInfor).success(function(data){
                     if(data == "success")
-                        alert("修改密码成功");
+                        $scope.showErrorMesPopup("修改密码成功");
                 },
                 function(errorMsg){
                     console.log("修改密码错误");
                 });
             }
             else{
-                alert("两次输入新密码不一致!");
+                $scope.showSuccessMesPopup("两次输入新密码不一致!");
             }
+        };
+
+        $scope.showErrorMesPopup = function(title) {
+            var myPopup = $ionicPopup.show({
+                title: '<b>'+title+'</b>'
+            });
+            $timeout(function() {
+                myPopup.close(); // 2秒后关闭
+            }, 1000);
+        };
+
+        $scope.showSuccessMesPopup = function(title) {
+            var myPopup = $ionicPopup.show({
+                title: '<b>'+title+'</b>',
+                template: '<p style="text-align: center"><ion-spinner icon="android" class="spinner-positive"></ion-spinner></p>'
+            });
+            $timeout(function() {
+                myPopup.close(); // 2秒后关闭
+                window.JMessage.logout(function() {
+                            console.log("登出极光成功");
+                                    }, function(errorStr) {
+                             console.log(errorStr);  // 输出错误信息。
+                            });
+                $state.go('login');
+            }, 500);
         };
 });
 
