@@ -7,7 +7,7 @@
     <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats track by chat.targetId" ui-sref="group-chatting" ng-if="chat.type == 'group'">
-        <img ng-src="{{chat.face}}">
+        <img ng-src="https://raw.githubusercontent.com/resudualgave/asd/master/userpic.png">
         <h2>{{chat.targetId}}</h2>
         <p>{{chat.lastText}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
@@ -17,8 +17,8 @@
       </ion-item>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats track by chat.targetId" ui-sref="chat-detail({chatId:chat.targetId})" ng-if="chat.type == 'single'">
         <img ng-src="{{chat.face}}">
-        <h2>{{chat.targetId}}</h2>
-        <p>{{chat.lastText}}</p>
+        <h2>{{chat.b}}</h2>
+        <p>{{chat.latestText}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
         <ion-option-button class="button-assertive" ng-click="remove(chat)">
           删除

@@ -1,6 +1,6 @@
 
 angular.module('task-controller',[])
-	.controller('TaskCtrl',function($scope, $ionicPopup, $state, Task, MyInfo, Colleagues) {
+	.controller('TaskCtrl',function($scope, $ionicPopup, $state, Task, MyInfo, Colleagues, $filter) {
 
 //-------------------------------界面上tab界面切换---------------------------------
         $scope.tabIndex = '任务申请状态';
@@ -86,39 +86,21 @@ angular.module('task-controller',[])
                     else{
                         var alluser = JSON.parse(JSON.stringify(data));
                         console.log(alluser);
-                        $scope.tasks2deal ={};
-                        var count = 0;
-                        var temp0 =  {
-                            id:"",
-                            userID:"",
-                            userName:"",
-                            name:"",
-                            creat_at:"",
-                            content:""
-                        };
-                        var temp =  {
-                            id:"",
-                            userID:"",
-                            userName:"",
-                            name:"",
-                            creat_at:"",
-                            content:""
-                        };
+                        $scope.tasks2deal = new Array();
+                        // var count = 0;
+                        var temp0 =  {id:"",userID:"",userName:"",name:"",creat_at:"",content:""};
+                        var temp0 =  {id:"",userID:"",userName:"",name:"",creat_at:"",content:""};
                         for(var i = 0; i < vacation_task.length; i++){//将请假和其他任务两个不同的流程数据整理合并
                             temp = temp0;
-                            temp.name = "请假";
+                            temp.name = vacation_task[i].name;
                             temp.id = vacation_task[i].id;
                             temp.userID = vacation_task[i].assignee;
-                            temp.creat_at = vacation_task[i].createTime;
-                            temp.content = vacation_task[i].description;
+                            temp.creat_at = $filter('date')(vacation_task[i].createTime,'yyyy-MM-dd HH:mm:ss');                            temp.content = vacation_task[i].description;
                             for(var j = 0; j < alluser.length; j++)
                                 if(temp.userID == alluser[j].userID)
                                     temp.userName = alluser[j].userName;
-                            if($scope.tasks2deal[count] == undefined){
-                                $scope.tasks2deal[count] = [];
-                                $scope.tasks2deal[count].push(temp);
-                                count++;
-                            }
+                            $scope.tasks2deal.push(temp);
+                            // count++;
                             console.log($scope.tasks2deal);
                         }
                 
@@ -131,10 +113,16 @@ angular.module('task-controller',[])
                                 var temp = JSON.stringify(data);
                                 $scope.ot2deal = JSON.parse(temp);
                                 console.log(temp);
+                                for(var i = 0; i < $scope.ot2deal.length; i++){
+                                    var tmp_string = $filter('date')($scope.ot2deal[i].create_at,'yyyy-MM-dd HH:mm:ss');
+                                    $scope.ot2deal[i].create_at = tmp_string;
+                                }
                                 console.log($scope.ot2deal);
                             }
-//                        $scope.tasks2deal = $scope.tasks2deal.concat($scope.ot2deal);
-//                        console.log($scope.tasks2deal);
+                            console.log($scope.tasks2deal);
+                            console.log($scope.tasks2deal);
+                            $scope.tasks2deal = $scope.tasks2deal.concat($scope.ot2deal);
+                            console.log($scope.tasks2deal);
                         });
                     }
                 });
