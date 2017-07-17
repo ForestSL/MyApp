@@ -198,6 +198,54 @@ angular.module('personal-controller',[])
         $scope.back2personal = function(){
             $state.go("tab.account");
         };
-        
+        var user = JSON.parse(MyInfo.getLocalInfor());
+
+        $scope.input ={
+            oldPassword:"",
+            newPassword:"",
+            conformPassword:""
+        };
+
+        $scope.doModify= function()
+        {
+            newPassword = $scope.input.newPassword;
+            conformPassword = $scope.input.conformPassword;
+            oldPassword =$scope.input.oldPassword;
+            console.log(newPassword );
+            console.log(conformPassword);
+           
+            if(newPassword===conformPassword )
+            {
+                var  userInfor =
+                {
+                    userID:"",
+                    userPhone:"",
+                    newPwd:"",
+                    oldPwd:""
+                }
+
+                console.log(user);
+                userInfor.userID = user.userID;
+                userInfor.userPhone = user.userPhone;
+                userInfor.newPwd = newPassword;
+                userInfor.oldPwd = oldPassword;
+
+                console.log(userInfor);
+
+                Passsword.modifyPassword(userInfor).success(function(data)
+                {
+                    if(data == "success")
+                        alert("修改密码成功");
+                },
+                function(errorMsg)
+                {
+                    console.log("修改密码错误");
+                });
+            }
+            else
+            {
+                alert("两次输入新密码不一致!");
+            }
+        };
 });
 
