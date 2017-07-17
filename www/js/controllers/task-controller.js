@@ -77,25 +77,67 @@ angular.module('task-controller',[])
                 console.log("请假获取失败");
             }
             else{
-                var temp = JSON.stringify(data);
-                $scope.tasks2deal = JSON.parse(temp);
-                console.log(temp);
-                console.log($scope.tasks2deal);
-                Task.getOT2Deal("task",user).success(function(data){//获取待处理非请假任务列表
-                    if(data == "fail"){
-                        $scope.showErrorMesPopup("error in vacation");
-                        console.log("待处理失败");
+                var vacation_task = JSON.parse(JSON.stringify(data));
+                console.log(vacation_task);
+                Colleagues.getColleagus().success(function(data){//获取所有用户信息
+                    if(data == "err"){
+                        console.log("err");
                     }
                     else{
-                        var temp = JSON.stringify(data);
-                        $scope.ot2deal = JSON.parse(temp);
-                        console.log(temp);
-                        console.log($scope.ot2deal);
+                        var alluser = JSON.parse(JSON.stringify(data));
+                        console.log(alluser);
+                        $scope.tasks2deal ={};
+                        var count = 0;
+                        var temp0 =  {
+                            id:"",
+                            userID:"",
+                            userName:"",
+                            name:"",
+                            creat_at:"",
+                            content:""
+                        };
+                        var temp =  {
+                            id:"",
+                            userID:"",
+                            userName:"",
+                            name:"",
+                            creat_at:"",
+                            content:""
+                        };
+                        for(var i = 0; i < vacation_task.length; i++){//将请假和其他任务两个不同的流程数据整理合并
+                            temp = temp0;
+                            temp.name = "请假";
+                            temp.id = vacation_task[i].id;
+                            temp.userID = vacation_task[i].assignee;
+                            temp.creat_at = vacation_task[i].createTime;
+                            temp.content = vacation_task[i].description;
+                            for(var j = 0; j < alluser.length; j++)
+                                if(temp.userID == alluser[j].userID)
+                                    temp.userName = alluser[j].userName;
+                            if($scope.tasks2deal[count] == undefined){
+                                $scope.tasks2deal[count] = [];
+                                $scope.tasks2deal[count].push(temp);
+                                count++;
+                            }
+                            console.log($scope.tasks2deal);
+                        }
+                
+                        Task.getOT2Deal("task",user).success(function(data){//获取待处理非请假任务列表
+                            if(data == "fail"){
+                                $scope.showErrorMesPopup("error in vacation");
+                                console.log("待处理失败");
+                            }
+                            else{
+                                var temp = JSON.stringify(data);
+                                $scope.ot2deal = JSON.parse(temp);
+                                console.log(temp);
+                                console.log($scope.ot2deal);
+                            }
+//                        $scope.tasks2deal = $scope.tasks2deal.concat($scope.ot2deal);
+//                        console.log($scope.tasks2deal);
+                        });
                     }
-                $scope.tasks2deal = $scope.tasks2deal.concat($scope.ot2deal);
-                console.log($scope.tasks2deal);
                 });
-
             }
         });
         

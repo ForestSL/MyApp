@@ -117,7 +117,7 @@ angular.module('starter.services', [])
       }
       return {
         all: function() {
-          return fInfo;
+          return myInfo;
         },
         edit: function(attr) {
           chats.splice(chats.indexOf(chat), 1);

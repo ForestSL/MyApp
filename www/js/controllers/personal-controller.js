@@ -244,14 +244,14 @@ angular.module('personal-controller',[])
 
                 Passsword.modifyPassword(userInfor).success(function(data){
                     if(data == "success")
-                        $scope.showErrorMesPopup("修改密码成功");
+                        $scope.showSuccessMesPopup("修改密码成功");
                 },
                 function(errorMsg){
                     console.log("修改密码错误");
                 });
             }
             else{
-                $scope.showSuccessMesPopup("两次输入新密码不一致!");
+                $scope.showErrorMesPopup("两次输入新密码不一致!");
             }
         };
 
