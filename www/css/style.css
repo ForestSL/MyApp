@@ -221,3 +221,23 @@ div .list_head{
     margin-bottom: -10px;
 
 }
+
+
+.bulletin_head{
+    float:center;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    font-family: "宋体";
+}
+
+/*小红点*/
+.tabs-red-point {
+  position: absolute;
+  top: 4%;
+  right: calc(50% - 16px);
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  background-color: red
+}

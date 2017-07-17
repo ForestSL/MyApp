@@ -7,17 +7,17 @@
   </ion-nav-buttons>
         <ion-content>
             <ion-item  class="item-text-wrap" style="margin-top: 20px">
-                <h>
+                <div class="bulletin_head">
                     {{bulletin.name}}
-                </h>
+                </div>
+                <br>
                 <label style="float: right;">
                     <p>
                         {{bulletin.time}}
                     </p>
                 </label>
-                <p>
-                    {{bulletin.content}}
-                </p>          
+                <br><br>
+                <div ng-bind-html = "bulletin_content"></div>          
             </ion-item>
         </ion-content>
 </ion-view>

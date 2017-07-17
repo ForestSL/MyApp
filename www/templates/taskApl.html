@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <ion-content class="has-subheader" >
+    <ion-content class="has-subheader">
         
         <div ng-include="'请假.html'" ng-if="tabIndex=='请假'"></div>
         <div ng-include="'其他.html'" ng-if="tabIndex=='其他'"></div>
@@ -46,20 +46,31 @@
         <script type="text/ng-template" id="其他.html">
             <div style="margin-top: 50px;margin-left: 10px;margin-right: 10px">
             <form>
-                <div>
-                    <label>请假类型：</label>
-                    <select style="margin-left: 50px">
-                    <option>公休</option>
-                    <option>病假</option>
-                    <option>调休</option>
-                    <option>事假</option>
-                    <option>婚假</option>
-                    </select>
-                </div><br>
-            <button class="button button-block button-positive" ng-click="Osubmit()">
-                提交
-            </button>
+                任务名称：
+                <select style="margin-left: 20px" ng-model="otask.name">
+                    <option  value="">请选择</option><!-- 防止第一个选项是空白 -->
+                    <option ng-repeat="OTN in OTaskName" ng-if="OTN.name != 'vacation'" value="{{OTN.name}}">
+                        {{OTN.name}}
+                    </option>
+                </select>
+                <br><br>
+                任务内容：
+                <input type="textarea" placeholder="" ng-model="otask.content" style="margin-left: 20px;width: 65%">
+                <br><br>
+                接收人：
+                <select style="margin-left: 35px" ng-model="otask.receiver">
+                    <option  value="">请选择</option><!-- 防止第一个选项是空白 -->
+                    <option value="81">曹春</option>
+                    <!-- <option ng-repeat="OTN in OTaskName" ng-if="OTN.name != 'vacation'">
+                        {{OTN.name}}
+                    </option> -->
+                </select>
+                <br><br>
+            
         </form>
+        <button class="button button-block button-positive" ng-click="Osubmit()">
+                提交
+        </button>
         </div>
         </script>
     </ion-content>

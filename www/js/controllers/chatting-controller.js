@@ -50,7 +50,7 @@ angular.module('chatting-controller',[])
         };
     })  
 
-.controller('ChatDetailCtrl', function($scope, $rootScope, $stateParams, $cordovaCamera,$ionicActionSheet,Chats, MyInfo, Messages) 
+.controller('ChatDetailCtrl', function($ionicNavBarDelegate, $scope, $rootScope, $stateParams, $cordovaCamera,$ionicActionSheet,Chats, MyInfo, Messages) 
     {  
        // alert($stateParams.chatId);
        $scope.chat = Chats.get($stateParams.chatId);

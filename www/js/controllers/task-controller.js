@@ -74,15 +74,33 @@ angular.module('task-controller',[])
         Task.getTask2Deal("task",user).success(function(data){//获取待处理任务列表
             if(data == "fail"){
                 $scope.showErrorMesPopup("error in vacation");
-                console.log("ahsud");
+                console.log("请假获取失败");
             }
             else{
                 var temp = JSON.stringify(data);
                 $scope.tasks2deal = JSON.parse(temp);
                 console.log(temp);
                 console.log($scope.tasks2deal);
+                Task.getOT2Deal("task",user).success(function(data){//获取待处理非请假任务列表
+                    if(data == "fail"){
+                        $scope.showErrorMesPopup("error in vacation");
+                        console.log("待处理失败");
+                    }
+                    else{
+                        var temp = JSON.stringify(data);
+                        $scope.ot2deal = JSON.parse(temp);
+                        console.log(temp);
+                        console.log($scope.ot2deal);
+                    }
+                $scope.tasks2deal = $scope.tasks2deal.concat($scope.ot2deal);
+                console.log($scope.tasks2deal);
+                });
+
             }
         });
+        
+
+
 
 //-------------------------------删除已经结束流程的任务---------------------------------
 
@@ -197,18 +215,6 @@ angular.module('task-controller',[])
         //获取用户的相关数据
   		 var user = JSON.parse(MyInfo.getLocalInfor());          
           
-//-------------------------------获取可供申请的其他任务的名称---------------------------------
-//
-        Task.getOTaskName("task").success(function(data){
-                if(data == "err in get /task/deploy"){
-                    console.log("22222");
-                }
-                else{
-                    var temp = JSON.stringify(data);
-                    $scope.OTaskName = JSON.parse(temp);
-                    console.log($scope.OTaskName);
-                }
-          });
 
 //-------------------------------submit方法，提交表单数据---------------------------------
 //
@@ -231,13 +237,34 @@ angular.module('task-controller',[])
             console.log($scope.task);
         };
 
+//-------------------------------获取可供申请的其他任务的名称---------------------------------
+//
+        Task.getOTaskName("task").success(function(data){
+                if(data == "err in get /task/deploy"){
+                    console.log("22222");
+                }
+                else{
+                    var temp = JSON.stringify(data);
+                    $scope.OTaskName = JSON.parse(temp);
+                    console.log($scope.OTaskName);
+                }
+          });
+
+        $scope.otask={name:"",
+                    userID:"",
+                    userName:"",
+                    content:"",
+                    receiver:""};
+
 //----------------------其他类型任务提交--------------------------------
 
         $scope.Osubmit = function(){
-            $scope.task.userID = user.userID;
-            $scope.task.userName = user.userName; 
-            console.log($scope.task);
-            Task.LeaveApl("task",  $scope.task).success(function(data){
+            console.log("otask.name"); 
+            console.log($scope.otask.name);
+            $scope.otask.userID = user.userID;
+            $scope.otask.userName = user.userName;
+            console.log($scope.otask);
+            Task.AplOTask("task",  $scope.otask).success(function(data){
                 if(data == "fail"){
                     $scope.showErrorMesPopup("申请发送失败");
                     console.log("22222");
@@ -247,9 +274,6 @@ angular.module('task-controller',[])
                     console.log($scope.task);
                 }
             });
-
-            $scope.task.apldate = new Date();
-            console.log($scope.task);
         };
 
         //提交失败的弹窗

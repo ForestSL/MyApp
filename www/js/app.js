@@ -156,6 +156,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
           controller:'BulletinDetailCtrl'
         })
 
+        .state('modify',{
+          url:'/modify',
+          templateUrl:'templates/modifyPassword.html',
+          controller:'ModifyCtrl'
+        })
+
         .state('taskApl',{
           url:'/taskApl',
           cache:false,

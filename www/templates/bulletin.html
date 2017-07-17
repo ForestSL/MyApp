@@ -5,9 +5,41 @@
         返回
         </button>
   </ion-nav-buttons>
+
+    <div class="bar subheader-bar has-header">
+        <div class="row text-center">
+            <div class="col two-level-nav" ng-click="showTab('未读')" ng-class="{'blue':isOne}">
+            未读
+            </div>
+            <div class="col two-level-nav" ng-click="showTab('已读')" ng-class="{'blue':isTwo}">
+            已读
+            </div>
+        </div>
+    </div>
+
+
     <ion-pane>
-        <ion-content on-swipe-left="onSwipeLeft()">
+        <ion-content  class="has-subheader">
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div ng-include="'未读.html'" ng-if="tabIndex=='未读'"></div>
+        <div ng-include="'已读.html'" ng-if="tabIndex=='已读'"></div>
+
+        <script type="text/ng-template" id="未读.html">
+            <ion-list>
+                <ion-item  class="item-text-wrap" style="margin-top: 20px" ng-repeat = "un_bulletin in un_bulletins | orderBy:bulletin.time.processID:true" ui-sref="bulletin-detail({blt_detail:un_bulletin})">
+                    <h>
+                        {{un_bulletin.name}}
+                    </h>
+                    <label style="float: right;">
+                        <p>
+                            {{un_bulletin.time}}
+                        </p>
+                    </label>          
+                </ion-item>
+            </ion-list>
+        </script>
+
+        <script type="text/ng-template" id="已读.html">
             <ion-list>
                 <ion-item  class="item-text-wrap" style="margin-top: 20px" ng-repeat = "bulletin in bulletins | orderBy:bulletin.time.processID:true" ui-sref="bulletin-detail({blt_detail:bulletin})">
                     <h>
@@ -20,6 +52,7 @@
                     </label>          
                 </ion-item>
             </ion-list>
+        </script>
         </ion-content>
     </ion-pane>
 </ion-view>

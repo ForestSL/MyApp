@@ -117,7 +117,7 @@ angular.module('starter.services', [])
       }
       return {
         all: function() {
-          return myInfo;
+          return fInfo;
         },
         edit: function(attr) {
           chats.splice(chats.indexOf(chat), 1);
@@ -228,9 +228,13 @@ angular.module('starter.services', [])
     .factory('bulletinsService',function($http){
       
       return{
-        getAnnocement :function(tableName,requestParams){
+        getReadBulletin :function(tableName,requestParams){
               var url = config.basePath+tableName;
-              return $http.post(url+"/search",requestParams);
+              return $http.post(url+"/search/read",requestParams);
+            },
+        getunReadBulletin :function(tableName,requestParams){
+              var url = config.basePath+tableName;
+              return $http.post(url+"/search/unread/list",requestParams);
             }
       }
     })
@@ -243,7 +247,7 @@ angular.module('starter.services', [])
             console.log(url);
             return $http.post(url+"/vacation/list",requestParams);
           },
-          //请假申请
+          //发送请假申请
           LeaveApl:function(tableName,requestParams){
             var url = config.basePath+tableName;
             console.log(url);
@@ -291,6 +295,18 @@ angular.module('starter.services', [])
             var url = config.basePath+tableName;
             console.log(url);
             return $http.get(url+"/deploy");
+          },
+          //发送其他类型任务申请
+          AplOTask:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/other/request",requestParams); 
+          },
+          //获取待处理非请假任务列表
+          getOT2Deal:function(tableName,requestParams){
+            var url = config.basePath+tableName;
+            console.log(url);
+            return $http.post(url+"/other/handle/list",requestParams); 
           }
         }
       })
@@ -301,5 +317,15 @@ angular.module('starter.services', [])
             var url = config.basePath+"user";
             return $http.get(url);
           }
+      }
+    })
+    .factory('Passsword',function($http){
+      return{
+        modifyPassword: function(requestParams){
+          var url =  config.basePath + "user/update/pwd";
+          console.log(url);
+           return $http.post(url, {userPhone: requestParams.userPhone,userID:requestParams.userID,
+            oldPwd:requestParams.oldPwd,newPwd:requestParams.newPwd});
+        }
       }
     });

@@ -86,10 +86,34 @@ angular.module('personal-controller',[])
     })
 
 
-    .controller('BulletinCtrl',function($scope, $state,bulletinsService,MyInfo){
+    .controller('BulletinCtrl',function($scope, $state, bulletinsService, MyInfo){
+        //-------------------------------界面上tab界面切换---------------------------------
+        $scope.tabIndex = '未读';
+
+        $scope.isOne = false;
+        $scope.isTwo = false;
+
+        $scope.showTab = function(tabIndex){
+            if(tabIndex=='未读'){
+                $scope.isOne = true;
+                $scope.isTwo = false;
+            }else{
+                $scope.isHaveMoreData = true;
+                $scope.isOne = false;
+                $scope.isTwo = true;
+            }
+            $scope.tabIndex = tabIndex;
+        };
+
+        $scope.showTab($scope.tabIndex);
+
      
         var user = JSON.parse(MyInfo.getLocalInfor());
-        bulletinsService.getAnnocement("bulletin",user).success(function(data){
+        console.log(user);
+        var a = {departName:""};//因后端变量名称采用一个中间变量存数据
+        a.departName = user.DepartName;
+        console.log(a);
+        bulletinsService.getReadBulletin("bulletin",a).success(function(data){
             if(data == "err in post /bulletin"){
                 console.log(250);
             //        $scope.showErrorMesPopup("error in bulletin");
@@ -98,6 +122,18 @@ angular.module('personal-controller',[])
                 var temp = JSON.stringify(data);
                 $scope.bulletins = JSON.parse(temp);
                 console.log($scope.bulletins);
+                     //sessionStorage.setItem("bulletins",bulletins);
+            }
+        });
+        bulletinsService.getunReadBulletin("bulletin",a).success(function(data){
+            if(data == "err in post /bulletin"){
+                console.log(250);
+            //        $scope.showErrorMesPopup("error in bulletin");
+            }
+            else{
+                var temp = JSON.stringify(data);
+                $scope.un_bulletins = JSON.parse(temp);
+                console.log($scope.un_bulletins);
                      //sessionStorage.setItem("bulletins",bulletins);
             }
         });
@@ -111,18 +147,30 @@ angular.module('personal-controller',[])
 //        ] 
         $scope.doRefresh = function() {
 
-            bulletinsService.getAnnocement("bulletin",user).success(function(data){
-            if(data == "err in post /bulletin"){
-                console.log(250);
+            bulletinsService.getReadBulletin("bulletin",a).success(function(data){
+                if(data == "err in post /bulletin"){
+                    console.log(250);
             //        $scope.showErrorMesPopup("error in bulletin");
-            }
-            else{
-                var temp = JSON.stringify(data);
-                $scope.bulletins = JSON.parse(temp);
-                console.log($scope.bulletins);
-                     //sessionStorage.setItem("bulletins",bulletins);
-            }
-        });
+                }
+                else{
+                    var temp = JSON.stringify(data);
+                    $scope.bulletins = JSON.parse(temp);
+                    console.log($scope.bulletins);
+                         //sessionStorage.setItem("bulletins",bulletins);
+                }
+            });
+            bulletinsService.getunReadBulletin("bulletin",a).success(function(data){
+                if(data == "err in post /bulletin"){
+                    console.log(250);
+                //        $scope.showErrorMesPopup("error in bulletin");
+                }
+                else{
+                    var temp = JSON.stringify(data);
+                    $scope.un_bulletins = JSON.parse(temp);
+                    console.log($scope.un_bulletins);
+                         //sessionStorage.setItem("bulletins",bulletins);
+                }
+            });
             // $scope.bulletins = {};
             // $scope.$apply(function (){
             //     $scope.bulletins = JSON.parse(bulletinsService.getAnnocement());
@@ -136,11 +184,20 @@ angular.module('personal-controller',[])
         };
     })
 
-    .controller('BulletinDetailCtrl',function($scope, $state, $stateParams){
+    .controller('BulletinDetailCtrl',function($scope, $state, $stateParams, $sce){
         $scope.bulletin = $stateParams.blt_detail;
         console.log($scope.bulletin);
+        $scope.bulletin_content = $sce.trustAsHtml($scope.bulletin.html);
 
         $scope.back2bulletin = function(){
             $state.go("bulletin");
         };
-    });
+    })
+
+    .controller('ModifyCtrl',function($scope, $state,MyInfo,Passsword){
+        $scope.back2personal = function(){
+            $state.go("tab.account");
+        };
+        
+});
+

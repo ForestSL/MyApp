@@ -1,1 +1,1 @@
-angular.module('starter.controllers',['login-controller', 'list-controller', 'task-controller',  'chatting-controller','personal-controller']);
+angular.module('starter.controllers',['ngAnimate','login-controller', 'list-controller', 'task-controller',  'chatting-controller','personal-controller']);

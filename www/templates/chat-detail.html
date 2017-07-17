@@ -1,6 +1,6 @@
 <ion-view id="userMessagesView" hide-tabs="true"
           cache-view="false"
-          view-title= "{{user_list.userPhone}}">
+          view-title= "{user_list.userPhone}">
 
   <ion-nav-buttons side="left">
         <button class="button button-icon " ui-sref="tab.chats">
@@ -21,7 +21,7 @@
              on-hold="onMessageHold($event, $index, message)">
             <div ng-if="user !== message.fromID">
                 <img ng-click="viewProfile(message)" class="profile-pic left"
-                     ng-src="{{toUser.pic}}" onerror="onProfilePicError(this)" />
+                     ng-src="https://raw.githubusercontent.com/resudualgave/asd/master/userpic.png" onerror="onProfilePicError(this)" />
                 <div class="chat-bubble left">
                     <div class="message" ng-if="message.contentType == 'text'">{{message.content.text}}</div>
                     <div class="message" ng-if="message.contentType == 'image'">
@@ -36,7 +36,7 @@
             </div>
             <div ng-if="user === message.fromID">
                 <img ng-click="viewProfile(message)" class="profile-pic right"
-                     ng-src="{{user.pic}}" onerror="onProfilePicError(this)" />
+                     ng-src="https://raw.githubusercontent.com/resudualgave/asd/master/userpic.png" onerror="onProfilePicError(this)" />
                 <div class="chat-bubble right">
                     <div class="message" ng-if="message.contentType == 'text'">{{message.content.text}}</div>
                     <div class="message" ng-if="message.contentType == 'image'">

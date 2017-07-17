@@ -27,14 +27,8 @@
                     <h ng-if="task_state.name == 'vacation'">
                         请假申请
                     </h>
-                    <h ng-if="task_state.name == '出差'">
-                        出差申请
-                    </h>
-                    <h ng-if="task_state.name == '填表'">
-                        表格申请
-                    </h>
-                    <h ng-if="task_state.name == '聚餐'">
-                        聚餐申请
+                    <h ng-if="task_state.name != 'vacation'">
+                        {{task_state.name}}申请
                     </h>
                     <label style="float: right;">
                         {{task_state.result}}
@@ -60,7 +54,8 @@
         </script>
     
         <script type="text/ng-template" id="待处理任务.html">
-            <div class="list">
+            <ion-list>
+            <div>
                 <ion-item  class="item-text-wrap" style="margin-top: 10px" ng-repeat="task2deal in tasks2deal | orderBy:task_state.processID:true" ui-sref="task2deal-detail({dtltask2deal:task2deal})">
                     <h ng-if="task2deal.name == 'Handle vacation request'">
                         请假申请
@@ -75,6 +70,7 @@
                     </label>      
                 </ion-item>
             </div>
+            </ion-list>
         </script>
 
 
