@@ -184,10 +184,23 @@ angular.module('personal-controller',[])
         };
     })
 
-    .controller('BulletinDetailCtrl',function($scope, $state, $stateParams, $sce){
+    .controller('BulletinDetailCtrl',function($scope, $state, $stateParams, $sce, bulletinsService){
         $scope.bulletin = $stateParams.blt_detail;
         console.log($scope.bulletin);
         $scope.bulletin_content = $sce.trustAsHtml($scope.bulletin.html);
+
+        if($scope.bulletin.state == "unread"){
+            bulletinsService.getunReadDetail("bulletin",$scope.bulletin).success(function(data){
+                if(data == "err in post /bulletin"){
+                    console.log(250);
+            //        $scope.showErrorMesPopup("error in bulletin");
+                }
+                else{
+                    var temp = JSON.stringify(data);
+                         //sessionStorage.setItem("bulletins",bulletins);
+                }
+            });
+        }
 
         $scope.back2bulletin = function(){
             $state.go("bulletin");
@@ -206,18 +219,15 @@ angular.module('personal-controller',[])
             conformPassword:""
         };
 
-        $scope.doModify= function()
-        {
+        $scope.doModify= function(){
             newPassword = $scope.input.newPassword;
             conformPassword = $scope.input.conformPassword;
             oldPassword =$scope.input.oldPassword;
             console.log(newPassword );
             console.log(conformPassword);
            
-            if(newPassword===conformPassword )
-            {
-                var  userInfor =
-                {
+            if(newPassword===conformPassword ){
+                var  userInfor ={
                     userID:"",
                     userPhone:"",
                     newPwd:"",
@@ -232,18 +242,15 @@ angular.module('personal-controller',[])
 
                 console.log(userInfor);
 
-                Passsword.modifyPassword(userInfor).success(function(data)
-                {
+                Passsword.modifyPassword(userInfor).success(function(data){
                     if(data == "success")
                         alert("修改密码成功");
                 },
-                function(errorMsg)
-                {
+                function(errorMsg){
                     console.log("修改密码错误");
                 });
             }
-            else
-            {
+            else{
                 alert("两次输入新密码不一致!");
             }
         };

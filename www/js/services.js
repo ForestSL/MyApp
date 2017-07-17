@@ -228,13 +228,17 @@ angular.module('starter.services', [])
     .factory('bulletinsService',function($http){
       
       return{
-        getReadBulletin :function(tableName,requestParams){
+            getReadBulletin :function(tableName,requestParams){
               var url = config.basePath+tableName;
               return $http.post(url+"/search/read",requestParams);
             },
-        getunReadBulletin :function(tableName,requestParams){
+            getunReadBulletin :function(tableName,requestParams){
               var url = config.basePath+tableName;
               return $http.post(url+"/search/unread/list",requestParams);
+            },
+            getunReadDetail :function(tableName,requestParams){
+              var url = config.basePath+tableName;
+              return $http.post(url+"/search/unread/detail",requestParams);
             }
       }
     })
