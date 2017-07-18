@@ -270,7 +270,7 @@ angular.module('task-controller',[])
             }
             else{
                 $scope.alluser = JSON.parse(JSON.stringify(data));
-                console.log(alluser);
+//                console.log(alluser);
             }
         }); 
 
@@ -369,21 +369,25 @@ angular.module('task-controller',[])
         console.log($scope.dtltask);
 
 //-------------------------------连接数据库获取任务的具体内容---------------------------------
-
-        Task.getTaskDetail("task",$scope.dtltask).success(function(data){
+        if($scope.dtltask > 1000){
+            Task.getTaskDetail("task",$scope.dtltask).success(function(data){
             if(data == "fail"){
                 console.log("250");
             }
             else{
-                var temp = JSON.stringify(data);
-                console.log(temp);
-                $scope.task_detail = JSON.parse(temp);
-                console.log($scope.task_detail);
-                console.log($scope.task_detail.createTime)
-                $scope.reason = $scope.task_detail.description.split("Reason: ")[1];
-                console.log($scope.reason);
-            }
-        });
+                    var temp = JSON.stringify(data);
+                    console.log(temp);
+                    $scope.task_detail = JSON.parse(temp);
+                    console.log($scope.task_detail);
+                    console.log($scope.task_detail.createTime)
+                    $scope.reason = $scope.task_detail.description.split("Reason: ")[1];
+                    console.log($scope.reason);
+                }
+            });
+        }
+        else{
+            $scope.reason = $scope.dtltask.motivation;
+        }
 
 //        var temp = $scope.task_detail.createTime;
 //        console.log(temp[1]);

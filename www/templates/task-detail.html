@@ -47,6 +47,7 @@
                     </label>
             </ion-item>
             <ion-item ng-if="dtltask.name == 'vacation'">
+                备注
                     <label style="float: right;">
                         <p>
                             {{dtltask.motivation}}
@@ -74,7 +75,7 @@
             </ion-item>
         </ion-list>
             
-            <ion-item ng-if="dtltask.result == 'disapprove'">
+            <ion-item ng-if="dtltask.result == 'disapprove' && dtltask.name == 'vacation'">
                 <button class="button button-small" style="padding-right: 60px;padding-left: 50px;float: left;" ng-click="giveup()">
                     终止
                 </button>
